@@ -28,7 +28,20 @@ async function freshPage({ image = true } = {}) {
   return page;
 }
 
+async function openViewMenu(page) {
+  const menu = page.locator('details.view-menu');
+  if ((await menu.getAttribute('open')) === null) await menu.locator('summary').click();
+}
+
+async function openTemplateGroup(page) {
+  const group = page.locator('details.group', {
+    has: page.locator('.group-title', { hasText: '내 템플릿' }),
+  });
+  if ((await group.getAttribute('open')) === null) await group.locator('summary').click();
+}
+
 async function openComparison(page) {
+  await openViewMenu(page);
   await page.getByRole('button', { name: '원본과 비교' }).click();
   const slider = page.getByRole('slider', { name: '원본과 완성 카드 비교 경계선' });
   await slider.waitFor();
@@ -68,10 +81,11 @@ test('비교 중 시대를 바꾸면 카드만 바뀌고 원본은 유지된다 
 test('사진이 없으면 비교할 수 없는 이유가 함께 보인다 — 검사 5', async () => {
   const page = await freshPage({ image: false });
   try {
+    await openViewMenu(page);
     const button = page.getByRole('button', { name: '원본과 비교' });
     assert.equal(await button.isDisabled(), true);
     assert.equal(
-      await page.getByText('원본과 비교하려면 먼저 사진을 고르세요.').isVisible(),
+      await page.getByText('먼저 사진을 골라야 비교할 수 있습니다.').isVisible(),
       true
     );
   } finally {
@@ -169,6 +183,7 @@ test('템플릿은 편집값만 복원하고 비교 상태를 저장하지 않�
     await slider.focus();
     await slider.press('End');
 
+    await openTemplateGroup(page);
     await page.locator('#template-name').fill('비교 검사');
     await page.getByRole('button', { name: '현재 설정을 템플릿으로 저장' }).click();
     const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('t03-card-studio/templates')));

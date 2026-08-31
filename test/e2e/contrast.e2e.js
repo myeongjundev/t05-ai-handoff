@@ -118,6 +118,11 @@ let server;
 let browser;
 let page;
 
+async function openToolbarMenu(target, className) {
+  const menu = target.locator(`details.${className}`);
+  if ((await menu.getAttribute('open')) === null) await menu.locator('summary').click();
+}
+
 /** 애니메이션 중간값을 재지 않도록 전환을 끈다. 판정이 실행마다 흔들리면 안 된다. */
 const freeze = (target) =>
   target.addStyleTag({
@@ -190,6 +195,7 @@ test('경고 상태가 읽힌다', async () => {
   );
   await audit(page, '9:16 + 경고 상태');
 
+  await openToolbarMenu(page, 'view-menu');
   await page.getByRole('button', { name: /안전 영역 가이드 보기/ }).click();
   await page.waitForTimeout(150);
   await audit(page, '안전 영역 가이드');
@@ -208,6 +214,7 @@ test('어두운 작품 화면에서도 모든 글자가 읽힌다', async () => 
   // 페이지에서 유일하게 어두운 면이다. 밝은 바탕용으로 고른 토큰을 그대로
   // 물려받으면 전부 반대로 작동한다 — 실제로 강조색 1.82:1, 보조 문구
   // 2.62:1 로 사라져 있었다. 이 스코프는 따로 훑어야 잡힌다.
+  await openToolbarMenu(page, 'view-menu');
   await page.getByRole('button', { name: '작품으로 보기 ↗' }).click();
   await page.waitForSelector('.panel-preview.is-showcase');
   await page.waitForTimeout(200);
@@ -228,6 +235,7 @@ test('좁은 화면에서도 모든 글자가 읽힌다', async () => {
     await freeze(narrow);
     await audit(narrow, '390px 첫 화면');
 
+    await openToolbarMenu(narrow, 'view-menu');
     await narrow.getByRole('button', { name: '편집하며 보기' }).click();
     await narrow.waitForTimeout(200);
     await audit(narrow, '390px 플로팅 미리보기');

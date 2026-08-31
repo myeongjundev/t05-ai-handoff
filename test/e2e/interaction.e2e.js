@@ -21,6 +21,11 @@ let server;
 let browser;
 let page;
 
+async function openToolbarMenu(target, className) {
+  const menu = target.locator(`details.${className}`);
+  if ((await menu.getAttribute('open')) === null) await menu.locator('summary').click();
+}
+
 before(async () => {
   server = await startDistServer();
   browser = await chromium.launch();
@@ -112,6 +117,7 @@ test('페이지 안에서 이동해도 공유 링크가 주소에 남는다', as
   // 하필 클립보드가 막힌 환경에서 앱이 안내하는 대안이 "주소창의 주소를
   // 직접 복사해 주세요" 다. 그 주소를 앱이 스스로 날리고 있었다.
   await page.locator('#text-input').fill('오늘도 무사히');
+  await openToolbarMenu(page, 'share-menu');
   await page.getByRole('button', { name: '링크 복사' }).click();
   await page.waitForTimeout(300);
 
@@ -264,14 +270,10 @@ test('동작 줄이기에서는 처음부터 다 보인다', async () => {
   }
 });
 
-test('첫 화면에서 스크롤 없이 사진과 문구를 바꿀 수 있다', async () => {
-  // 과제 통과 기준 T03-C03 — 이미지 편집 도구와 문구 편집 도구가 첫 화면에
-  // 보여야 한다. 첫 화면을 랜딩으로 만들면서 한때 편집 도구가 3,500px
-  // 아래로 밀려 이 기준이 깨져 있었다. 화면 폭에 따라 다시 밀릴 수 있으므로
-  // 좁은 화면까지 함께 본다.
-  //
-  // '보인다' 로 끝내지 않는다. 바로가기 링크를 놓아도 보이기는 하므로,
-  // 여기서 바꾼 것이 실제 편집 상태에 반영되는지까지 확인해야 진짜 도구다.
+test('첫 화면은 중복 입력 없이 제작 도구로 자연스럽게 이어진다', async () => {
+  // 작업실의 사진·문구 입력을 Hero에도 복제하면 첫 화면은 빨라 보이지만,
+  // 같은 상태를 바꾸는 조작이 두 벌이 되어 사용자가 어디서 시작할지 헷갈린다.
+  // Hero에는 진입 행동만 두고 실제 입력은 Studio 한 곳에만 있는지 확인한다.
   for (const viewport of [{ width: 1440, height: 900 }, { width: 1366, height: 768 }, { width: 390, height: 844 }]) {
     const fresh = await browser.newPage({ viewport });
     try {
@@ -279,37 +281,23 @@ test('첫 화면에서 스크롤 없이 사진과 문구를 바꿀 수 있다', 
       await fresh.waitForSelector('canvas');
       await fresh.waitForTimeout(400);
 
-      const hidden = await fresh.evaluate(() =>
-        [
-          ['이미지 편집 도구', '.hero-quick .dropzone'],
-          ['문구 편집 도구', '.hero-quick textarea'],
-        ]
-          .filter(([, sel]) => {
-            const el = document.querySelector(sel);
-            if (!el) return true;
-            const b = el.getBoundingClientRect();
-            return !(b.top < window.innerHeight && b.bottom > 0 && b.width > 0);
-          })
-          .map(([label]) => label)
-      );
-      assert.deepEqual(
-        hidden,
-        [],
-        `${viewport.width}px 첫 화면에서 스크롤해야 보이는 도구: ${hidden.join(', ')}`
-      );
+      assert.equal(await fresh.locator('.hero-quick').count(), 0, 'Hero 중복 입력이 다시 생겼다');
+      assert.equal(await fresh.locator('.masthead textarea, .masthead .dropzone').count(), 0);
 
-      // 같은 상태를 쓰는 진짜 도구인지.
-      await fresh.locator('.hero-quick textarea').fill('첫 화면 편집');
+      await fresh.getByRole('button', { name: /제작 도구로/ }).click();
+      await fresh.waitForTimeout(400);
+      assert.equal(await fresh.locator('.panel-editor').isVisible(), true, '제작 도구가 보이지 않는다');
+      await fresh.locator('#text-input').fill('작업실 편집');
       await fresh.waitForTimeout(400);
       assert.equal(
         await fresh.locator('#text-input').inputValue(),
-        '첫 화면 편집',
-        `${viewport.width}px 첫 화면 입력이 편집 상태에 반영되지 않았다`
+        '작업실 편집',
+        `${viewport.width}px 작업실 입력이 편집 상태에 반영되지 않았다`
       );
       assert.match(
         await fresh.locator('.canvas-frame canvas').getAttribute('aria-label'),
-        /첫 화면 편집/,
-        `${viewport.width}px 첫 화면 입력이 미리보기에 그려지지 않았다`
+        /작업실 편집/,
+        `${viewport.width}px 작업실 입력이 미리보기에 그려지지 않았다`
       );
     } finally {
       await fresh.close();

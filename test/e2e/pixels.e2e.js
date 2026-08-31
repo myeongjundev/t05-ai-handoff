@@ -23,6 +23,11 @@ let server;
 let browser;
 let page;
 
+async function openToolbarMenu(target, className) {
+  const menu = target.locator(`details.${className}`);
+  if ((await menu.getAttribute('open')) === null) await menu.locator('summary').click();
+}
+
 before(async () => {
   server = await startDistServer();
   browser = await chromium.launch();
@@ -111,7 +116,10 @@ const clickText = async (selector, text) => {
 };
 
 const setRatio = (ratio) => page.locator('.ratio-group button', { hasText: ratio }).first().click();
-const setPersona = (name) => clickText('.preset-grid button', name);
+const setPersona = async (name) => {
+  await page.getByRole('button', { name: new RegExp(`^${name},`) }).click();
+  await page.waitForTimeout(80);
+};
 const setEra = (era) => clickText('.era-timeline button', era);
 
 /** 접혀 있는 묶음을 펼친다. 이미 펼쳐져 있으면 그대로 둔다. */
@@ -147,6 +155,7 @@ test('미리보기 캔버스와 내보낸 PNG 가 같은 픽셀이다', async ()
 
 test('9:16 안전 영역 가이드는 PNG 에 들어가지 않는다', async () => {
   await setRatio('9:16');
+  await openToolbarMenu(page, 'view-menu');
 
   const toggle = page.locator('button', { hasText: '안전 영역 가이드' }).first();
   if ((await toggle.getAttribute('aria-pressed')) === 'true') await toggle.click();
@@ -424,8 +433,9 @@ test('좁은 화면에서 가로 스크롤이 생기지 않는다', async () => 
     );
     assert.match(result.canvasLabel, /1:1.*기본 모습.*2026 시대.*배경 이미지 없음.*오늘도 무사히/, 'Canvas 설명에 결과 정보가 빠졌다');
     assert.equal(result.canvasDescribedBy, 'preview-description ready-check-list');
-    assert.equal(await narrow.getByText('30초 빠른 시작').count(), 1, '빠른 시작 안내가 없다');
+    assert.equal(await narrow.getByText('30초 빠른 시작').count(), 0, '삭제한 빠른 시작 안내가 다시 생겼다');
 
+    await openToolbarMenu(narrow, 'view-menu');
     const dockToggle = narrow.getByRole('button', { name: '편집하며 보기' });
     await dockToggle.click();
     await narrow.locator('.panel-editor').scrollIntoViewIfNeeded();
@@ -440,6 +450,7 @@ test('좁은 화면에서 가로 스크롤이 생기지 않는다', async () => 
     assert.equal(dock.visible, true, '고정 미리보기가 화면 밖으로 나갔다');
     await narrow.getByRole('button', { name: '큰 미리보기로 돌아가기' }).click();
 
+    await openToolbarMenu(narrow, 'view-menu');
     await narrow.getByRole('button', { name: '작품으로 보기 ↗' }).click();
     const showcase = await narrow.locator('.panel-preview').evaluate((panel) => ({
       fixed: getComputedStyle(panel).position === 'fixed',
