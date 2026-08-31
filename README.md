@@ -177,6 +177,14 @@ AI B는 인계 완료 여부를 확인하는 명령에서 금지 규칙을 읽�
 공개 화면 아래의 `30초 검증 시작`을 누르거나 [검증 안내서](docs/T05-VERIFICATION.md)를
 따릅니다.
 
+저장소에서는 한 명령으로 필수 자료, 보호 문서와 분할 커밋을 먼저 확인할 수 있습니다.
+
+```powershell
+npm.cmd run verify:handoff:evidence
+```
+
+평가 동선은 **Claude 요청 → HANDOFF → Codex 완성 커밋 → 자동 검증 결과** 순서입니다.
+
 ```text
 사진 선택 → 원본과 비교 → 경계선 드래그 또는 방향키
 ```
@@ -199,10 +207,11 @@ Windows PowerShell에서는 실행 정책에 따라 `npm.cmd`를 사용합니다
 
 ```powershell
 npm.cmd install
-npm.cmd test
-npm.cmd run build
-npm.cmd run test:e2e
+npm.cmd run verify:handoff
 ```
+
+`verify:handoff`는 인계 증거 검사 뒤 단위 85개, 빌드, Chromium E2E 38개를
+차례로 실행하며 개수가 하나라도 달라지면 실패합니다. 개별 명령도 그대로 유지됩니다.
 
 e2e를 처음 실행할 때는 Chromium 설치가 한 번 필요합니다.
 

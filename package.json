@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node --test test/*.test.js",
-    "test:e2e": "node --test test/e2e/*.e2e.js"
+    "test:e2e": "node --test test/e2e/*.e2e.js",
+    "verify:handoff:evidence": "node scripts/verify-handoff.mjs --evidence-only",
+    "verify:handoff": "node scripts/verify-handoff.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",
