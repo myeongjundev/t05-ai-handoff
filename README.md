@@ -7,7 +7,8 @@
 ### Claude가 멈춘 자리에서 Codex가 대화 없이 완성한 AI 인계 실험
 
 완성된 T03 카드 스튜디오에 **원본 ↔ 카드 비교 슬라이더**를 추가하며,<br>
-AI A와 AI B 사이의 대화 대신 코드·검사·`HANDOFF.md`만 전달했습니다.
+AI A와 AI B 사이의 대화 대신 코드·검사·`HANDOFF.md`만 전달했습니다.<br>
+실험 뒤에는 결과 확인 동선과 **다섯 구획 사이드바**까지 제품 수준으로 정리했습니다.
 
 <br>
 
@@ -26,6 +27,29 @@ AI A와 AI B 사이의 대화 대신 코드·검사·`HANDOFF.md`만 전달했�
 <img src="docs/screenshots/hero.webp" alt="T05의 기반 프로젝트 ALTER EGO 첫 화면. 시대를 탐색하는 Temporal Scanner가 보인다." width="100%">
 
 </div>
+
+## 프로젝트 한눈에 보기
+
+<table>
+<tr>
+<th width="33%">01 · PRODUCT</th>
+<th width="33%">02 · HANDOFF</th>
+<th width="34%">03 · EVIDENCE</th>
+</tr>
+<tr>
+<td valign="top"><strong>한 장의 사진을 세 시대의 자아로</strong><br><br>2004 · 2012 · 2026 카드 제작과 원본 비교를 한 화면에서 경험합니다.</td>
+<td valign="top"><strong>대화 없이 AI A → AI B</strong><br><br>고정 검사와 HANDOFF만으로 다음 AI가 구현을 이어받는 과정을 공개합니다.</td>
+<td valign="top"><strong>주장이 아니라 실행 결과로</strong><br><br>10/10 고정 검사, 85 unit, 38 e2e와 Pages 자동 배포로 결과를 증명합니다.</td>
+</tr>
+</table>
+
+```text
+프로젝트 서사 → 세 정체성 → 제작 Studio → AI 인계 결과 → 제품 판단
+```
+
+공개 페이지 오른쪽 사이드바에서 위 다섯 구획으로 바로 이동할 수 있습니다. 현재
+읽는 구획은 자동으로 강조되고, 모바일에서는 콘텐츠를 가리지 않도록 작은 레일로
+접힙니다. 공유 링크의 `#card=` 상태는 구획을 이동해도 유지됩니다.
 
 ## 이 실험이 묻는 것
 
@@ -136,6 +160,26 @@ Canvas-first·Single-column 목업을 만들고, Codex가 결과 확인 거리�
 이유를 직접 볼 수 있습니다. 구현 뒤에도 단위 85/85와 Chromium E2E 38/38을
 유지했습니다.
 
+### 긴 페이지에서도 평가 동선을 잃지 않게
+
+프로젝트 설명부터 실험 증거까지 한 페이지에 담으면서, 평가자가 원하는 근거를 찾기
+위해 끝없이 스크롤해야 하는 문제가 생겼습니다. [info-board](https://github.com/myeongjundev/info-board)에서 검증했던 방식을 이
+프로젝트의 구조에 맞게 다시 설계했습니다.
+
+| 사이드바 구획 | 바로 확인할 수 있는 내용 |
+|---|---|
+| 프로젝트 | 왜 세 시대의 디지털 자아를 선택했는지 |
+| 세 정체성 | 동일한 사진이 시대별로 달라지는 시각 결과 |
+| 스튜디오 | 직접 편집하고 원본과 비교하는 실제 제품 |
+| AI 인계 | Claude → HANDOFF → Codex의 실험 과정과 수치 |
+| 제품 판단 | 실험 뒤 Studio를 정리한 Before/After 근거 |
+
+- 링크가 아닌 버튼형 이동으로 공유 상태 해시를 덮어쓰지 않습니다.
+- 스크롤 위치를 관찰해 현재 구획에 `aria-current`를 제공합니다.
+- 1200px 이하에서는 접이식 레일, 넓은 화면에서는 전체 목차를 보여 줍니다.
+- 작품 전시 모드에서는 보이지 않는 목차에 키보드 초점이 들어가지 않습니다.
+- 기존 `맨 위로` 기능은 목차 하단에 통합했습니다.
+
 ## 고정 검사 10개
 
 기능을 만들기 전에 성공·오류·회귀 검사를 고정했습니다.
@@ -206,7 +250,8 @@ AI B는 인계 완료 여부를 확인하는 명령에서 금지 규칙을 읽�
 npm.cmd run verify:handoff:evidence
 ```
 
-평가 동선은 **Claude 요청 → HANDOFF → Codex 완성 커밋 → 자동 검증 결과** 순서입니다.
+평가 동선은 사이드바의 `AI 인계`에서 시작해
+**Claude 요청 → HANDOFF → Codex 완성 커밋 → 자동 검증 결과** 순서로 이어집니다.
 
 ```text
 샘플로 30초 체험 → 보기 · 원본과 비교 → 경계선 드래그 또는 방향키
@@ -217,7 +262,8 @@ npm.cmd run verify:handoff:evidence
 - 왼쪽 원본과 오른쪽 완성 카드의 비율이 함께 바뀝니다.
 - Home은 0, End는 100으로 이동합니다.
 - 비교를 닫아도 PNG·템플릿·되돌리기 결과는 바뀌지 않습니다.
-- 페이지 아래에서 AI A → HANDOFF → AI B와 검사 10개 결과를 확인할 수 있습니다.
+- 사이드바의 `AI 인계`에서 AI A → HANDOFF → AI B와 검사 10개 결과를 확인합니다.
+- `제품 판단`에서 기능을 줄이지 않고 Studio를 정리한 Before/After를 확인합니다.
 
 ## 로컬 실행과 검증
 
@@ -251,6 +297,8 @@ src/
   components/
     PreviewPanel.jsx          비교 UI와 원본 overlay
     HandoffExperiment.jsx     공개 인계 사례 연구와 30초 검증
+    StudioCleanupCaseStudy.jsx Studio 정리 전후와 선택 근거
+    SectionRail.jsx           다섯 구획 이동·현재 위치·맨 위로
   state/
     compareMode.js            비교 상태·비율·키보드 계산
   render/                     Canvas 카드 렌더러
