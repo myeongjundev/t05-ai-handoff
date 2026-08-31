@@ -422,6 +422,31 @@ export default function App() {
     image.src = url;
   }, []);
 
+  /** 파일 선택 없이도 평가자가 즉시 비교 기능을 확인할 수 있는 공개 샘플. */
+  const useSampleImage = useCallback(() => {
+    const requestId = imageRequestRef.current + 1;
+    imageRequestRef.current = requestId;
+    const image = new Image();
+
+    image.onload = () => {
+      if (requestId !== imageRequestRef.current) return;
+      if (imageUrlRef.current) URL.revokeObjectURL(imageUrlRef.current);
+      imageUrlRef.current = null;
+      setState((prev) => ({ ...prev, image, imageName: 'ALTER EGO 공개 샘플.avif' }));
+      setNotice({
+        type: 'success',
+        text: '샘플 이미지를 적용했습니다. 보기 메뉴에서 원본과 비교를 열어 보세요.',
+      });
+    };
+
+    image.onerror = () => {
+      if (requestId !== imageRequestRef.current) return;
+      setNotice({ type: 'error', text: '샘플 이미지를 읽지 못했습니다. 내 사진을 선택해 주세요.' });
+    };
+
+    image.src = identityBanner;
+  }, []);
+
   const clearImage = useCallback(() => {
     imageRequestRef.current += 1;
     if (imageUrlRef.current) {
@@ -541,6 +566,12 @@ export default function App() {
       ?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
   }, []);
 
+  const scrollToHandoff = useCallback(() => {
+    document
+      .getElementById('t05-result')
+      ?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+  }, []);
+
   /**
    * 맨 위로 버튼.
    *
@@ -618,9 +649,14 @@ export default function App() {
             A/E
           </button>
           <span>TIME-TRAVEL ID STUDIO</span>
-          <button type="button" className="nav-studio-button" onClick={scrollToStudio}>
-            제작 도구로 ↘
-          </button>
+          <div className="nav-actions">
+            <button type="button" className="nav-result-button" onClick={scrollToHandoff}>
+              T05 결과
+            </button>
+            <button type="button" className="nav-studio-button" onClick={scrollToStudio}>
+              제작 도구로 ↘
+            </button>
+          </div>
         </nav>
 
         <div className="hero" id="top">
@@ -720,6 +756,7 @@ export default function App() {
           onUsePreset={usePreset}
           onUseEra={useEra}
           onPickImage={pickImage}
+          onUseSampleImage={useSampleImage}
           onClearImage={clearImage}
           templateCount={templates.length}
           templatePanel={(

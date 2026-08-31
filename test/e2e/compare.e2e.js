@@ -210,7 +210,9 @@ test('공개 화면에서 AI A → 인계 → AI B 결과가 함께 보인다', 
   const page = await freshPage({ image: false });
   try {
     const section = page.locator('.handoff-experiment');
-    await section.scrollIntoViewIfNeeded();
+    await page.getByRole('button', { name: 'T05 결과' }).click();
+    await page.waitForTimeout(500);
+    assert.equal(await section.isVisible(), true);
     assert.equal(await section.getByText('AI A · CLAUDE').isVisible(), true);
     assert.equal(await section.getByText('HANDOFF.MD').isVisible(), true);
     assert.equal(await section.getByText('AI B · CODEX').isVisible(), true);
@@ -221,6 +223,12 @@ test('공개 화면에서 AI A → 인계 → AI B 결과가 함께 보인다', 
     assert.equal(await cleanup.getByText('Canvas-first 2열').isVisible(), true);
     assert.match(await cleanup.innerText(), /23[\s\S]*약 14/);
     assert.match(await cleanup.innerText(), /85\/85[\s\S]*38\/38/);
+
+    await page.getByRole('button', { name: '샘플로 30초 체험' }).click();
+    await page.waitForTimeout(500);
+    assert.match(await page.locator('.file-current').innerText(), /공개 샘플/);
+    await openViewMenu(page);
+    assert.equal(await page.getByRole('button', { name: '원본과 비교' }).isEnabled(), true);
     assert.match(await section.innerText(), /11분 · 요청 3회 · 검사 1~3/);
     assert.match(await section.innerText(), /8분 · 요청 1회 · 검사 4~10/);
     assert.match(await section.innerText(), /AI에게 맡긴 일/);

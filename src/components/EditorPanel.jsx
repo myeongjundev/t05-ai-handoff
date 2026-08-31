@@ -61,6 +61,7 @@ export default function EditorPanel({
   onUsePreset,
   onUseEra,
   onPickImage,
+  onUseSampleImage,
   onClearImage,
   templateCount,
   templatePanel,
@@ -123,6 +124,11 @@ export default function EditorPanel({
           title={state.image ? '다른 이미지로 바꾸기' : '이미지 끌어다 놓기'}
           hint={state.image ? '클릭해서 고를 수도 있습니다' : '또는 클릭해서 고르기 · PNG · JPEG'}
         />
+        <div className="button-row sample-image-row">
+          <button type="button" className="small" onClick={onUseSampleImage}>
+            샘플로 30초 체험
+          </button>
+        </div>
         {state.image ? (
           <p className="file-current" title={state.imageName}>
             <span className="file-dot" aria-hidden="true" />

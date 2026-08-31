@@ -209,7 +209,7 @@ npm.cmd run verify:handoff:evidence
 평가 동선은 **Claude 요청 → HANDOFF → Codex 완성 커밋 → 자동 검증 결과** 순서입니다.
 
 ```text
-사진 선택 → 원본과 비교 → 경계선 드래그 또는 방향키
+샘플로 30초 체험 → 보기 · 원본과 비교 → 경계선 드래그 또는 방향키
 ```
 
 기대 결과:

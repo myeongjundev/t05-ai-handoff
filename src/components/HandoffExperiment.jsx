@@ -28,7 +28,7 @@ export default function HandoffExperiment({ onGoToStudio }) {
   const [reviewOpen, setReviewOpen] = useState(false);
 
   return (
-    <section className="handoff-experiment" aria-labelledby="handoff-heading">
+    <section className="handoff-experiment" id="t05-result" aria-labelledby="handoff-heading">
       <header className="handoff-heading" data-reveal>
         <p>05 / AI HANDOFF EXPERIMENT</p>
         <h2 id="handoff-heading">대화가 끊겨도,<br />프로젝트는 이어졌습니다.</h2>
