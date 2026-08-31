@@ -215,6 +215,12 @@ test('공개 화면에서 AI A → 인계 → AI B 결과가 함께 보인다', 
     assert.equal(await section.getByText('HANDOFF.MD').isVisible(), true);
     assert.equal(await section.getByText('AI B · CODEX').isVisible(), true);
     assert.match(await section.innerText(), /10\/10 통과/);
+
+    const cleanup = page.locator('.cleanup-case');
+    await cleanup.scrollIntoViewIfNeeded();
+    assert.equal(await cleanup.getByText('Canvas-first 2열').isVisible(), true);
+    assert.match(await cleanup.innerText(), /23[\s\S]*약 14/);
+    assert.match(await cleanup.innerText(), /85\/85[\s\S]*38\/38/);
     assert.match(await section.innerText(), /11분 · 요청 3회 · 검사 1~3/);
     assert.match(await section.innerText(), /8분 · 요청 1회 · 검사 4~10/);
     assert.match(await section.innerText(), /AI에게 맡긴 일/);
@@ -222,7 +228,7 @@ test('공개 화면에서 AI A → 인계 → AI B 결과가 함께 보인다', 
     const reviewButton = section.getByRole('button', { name: '30초 검증 시작' });
     await reviewButton.click();
     assert.equal(await section.getByRole('region', { name: '30초 검증 안내' }).isVisible(), true);
-    assert.equal(await section.getByRole('link', { name: /Studio에서 직접 검증하기/ }).getAttribute('href'), '#studio');
+    assert.equal(await section.getByRole('button', { name: /Studio에서 직접 검증하기/ }).isVisible(), true);
   } finally {
     await page.close();
   }

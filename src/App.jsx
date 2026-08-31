@@ -26,6 +26,7 @@ import { templateFromState, stateFromTemplate } from './templates/schema.js';
 import EditorPanel from './components/EditorPanel.jsx';
 import PreviewPanel from './components/PreviewPanel.jsx';
 import HandoffExperiment from './components/HandoffExperiment.jsx';
+import StudioCleanupCaseStudy from './components/StudioCleanupCaseStudy.jsx';
 import TemplatePanel from './components/TemplatePanel.jsx';
 import TemporalScanner from './components/TemporalScanner.jsx';
 import identityBanner from '../배너이미지/짤스튜디오02.avif';
@@ -758,7 +759,8 @@ export default function App() {
         />
       </div>
 
-      <HandoffExperiment />
+      <HandoffExperiment onGoToStudio={scrollToStudio} />
+      <StudioCleanupCaseStudy />
 
       {/*
         보일 때만 DOM 에 넣는다. 숨긴 채로 두면 Tab 이 화면에 없는 버튼에

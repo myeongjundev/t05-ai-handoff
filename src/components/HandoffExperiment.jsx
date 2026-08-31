@@ -24,7 +24,7 @@ const CHECKS = [
   ['10', 'AI B', '템플릿에 비교 상태 제외', '브라우저 e2e'],
 ];
 
-export default function HandoffExperiment() {
+export default function HandoffExperiment({ onGoToStudio }) {
   const [reviewOpen, setReviewOpen] = useState(false);
 
   return (
@@ -53,10 +53,12 @@ export default function HandoffExperiment() {
         <div className="handoff-review" id="handoff-review-guide" role="region" aria-label="30초 검증 안내">
           <ol>
             <li><strong>사진 선택</strong><span>Studio에서 샘플 또는 내 사진을 고릅니다.</span></li>
-            <li><strong>비교 열기</strong><span>결과 확인의 ‘원본과 비교’를 누릅니다.</span></li>
+            <li><strong>비교 열기</strong><span>결과 확인의 ‘보기’에서 ‘원본과 비교’를 누릅니다.</span></li>
             <li><strong>경계 이동</strong><span>드래그·방향키·Home·End로 0~100을 확인합니다.</span></li>
           </ol>
-          <a href="#studio">Studio에서 직접 검증하기 <span aria-hidden="true">→</span></a>
+          <button type="button" className="handoff-studio-link" onClick={onGoToStudio}>
+            Studio에서 직접 검증하기 <span aria-hidden="true">→</span>
+          </button>
         </div>
       )}
 
