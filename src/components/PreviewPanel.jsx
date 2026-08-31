@@ -230,59 +230,7 @@ const PreviewPanel = forwardRef(function PreviewPanel(
         </div>
       )}
 
-      <div className="history-controls">
-        <button
-          type="button"
-          className="small"
-          onClick={onUndo}
-          disabled={!canUndo}
-          title="되돌리기 (Ctrl+Z)"
-        >
-          ↩ 실행 취소
-        </button>
-        <button
-          type="button"
-          className="small"
-          onClick={onRedo}
-          disabled={!canRedo}
-          title="다시 실행 (Ctrl+Shift+Z)"
-        >
-          ↪ 다시 실행
-        </button>
-        <button
-          type="button"
-          className="small mobile-dock-toggle"
-          aria-pressed={mobileDocked}
-          onClick={() => setMobileDocked((docked) => !docked)}
-        >
-          {mobileDocked ? '큰 미리보기' : '편집하며 보기'}
-        </button>
-        <button
-          type="button"
-          className="small showcase-toggle"
-          aria-pressed={showcaseMode}
-          onClick={() => setShowcaseMode((visible) => !visible)}
-        >
-          {showcaseMode ? '편집으로 돌아가기' : '작품으로 보기 ↗'}
-        </button>
-        <button
-          type="button"
-          className="small compare-toggle"
-          aria-pressed={compare.open}
-          aria-describedby={!comparable ? 'compare-unavailable' : undefined}
-          disabled={!comparable}
-          onClick={() => setCompare((current) => toggleCompare(current, state.image))}
-        >
-          {compare.open ? '비교 닫기' : '원본과 비교'}
-        </button>
-      </div>
-      {!comparable && (
-        <p className="compare-unavailable" id="compare-unavailable">
-          원본과 비교하려면 먼저 사진을 고르세요.
-        </p>
-      )}
-
-      <div className="preview-head">
+      <div className="preview-toolbar">
         <div className="ratio-block">
           <div className="ratio-group segmented" role="group" aria-label="화면 비율">
             {RATIO_KEYS.map((ratio) => (
@@ -312,16 +260,94 @@ const PreviewPanel = forwardRef(function PreviewPanel(
           )}
         </div>
 
-        <div className="button-row">
-          <button type="button" onClick={onShare}>
-            링크 복사
-          </button>
-          <button type="button" onClick={onCopyImage} disabled={!canDownload}>
-            이미지 복사
-          </button>
+        <div className="preview-actions">
+          <div className="history-icons" aria-label="편집 이력">
+            <button
+              type="button"
+              className="small icon-button"
+              aria-label="실행 취소"
+              onClick={onUndo}
+              disabled={!canUndo}
+              title="실행 취소 (Ctrl+Z)"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 14L4 9l5-5" /><path d="M4 9h11a5 5 0 0 1 0 10H9" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="small icon-button"
+              aria-label="다시 실행"
+              onClick={onRedo}
+              disabled={!canRedo}
+              title="다시 실행 (Ctrl+Shift+Z)"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 14l5-5-5-5" /><path d="M20 9H9a5 5 0 0 0 0 10h6" />
+              </svg>
+            </button>
+          </div>
+
+          <details className="toolbar-menu view-menu">
+            <summary>보기 <span aria-hidden="true">▾</span></summary>
+            <div className="toolbar-popover">
+              <button
+                type="button"
+                className="small mobile-dock-toggle"
+                aria-pressed={mobileDocked}
+                onClick={() => setMobileDocked((docked) => !docked)}
+              >
+                {mobileDocked ? '큰 미리보기' : '편집하며 보기'}
+              </button>
+              <button
+                type="button"
+                className="small showcase-toggle"
+                aria-pressed={showcaseMode}
+                onClick={() => setShowcaseMode((visible) => !visible)}
+              >
+                {showcaseMode ? '편집으로 돌아가기' : '작품으로 보기 ↗'}
+              </button>
+              <button
+                type="button"
+                className="small compare-toggle"
+                aria-pressed={compare.open}
+                aria-describedby={!comparable ? 'compare-unavailable' : undefined}
+                disabled={!comparable}
+                onClick={() => setCompare((current) => toggleCompare(current, state.image))}
+              >
+                {compare.open ? '비교 닫기' : '원본과 비교'}
+              </button>
+              {!comparable && (
+                <span className="compare-unavailable" id="compare-unavailable">
+                  먼저 사진을 골라야 비교할 수 있습니다.
+                </span>
+              )}
+              {state.ratio === '9:16' && (
+                <button
+                  type="button"
+                  className="small safe-area-toggle"
+                  aria-pressed={showSafeArea}
+                  onClick={() => setShowSafeArea((visible) => !visible)}
+                >
+                  {showSafeArea ? '안전 영역 가이드 숨기기' : '안전 영역 가이드 보기'}
+                </button>
+              )}
+            </div>
+          </details>
+
+          <details className="toolbar-menu share-menu">
+            <summary>공유 <span aria-hidden="true">▾</span></summary>
+            <div className="toolbar-popover">
+              <button type="button" className="small" onClick={onShare}>링크 복사</button>
+              <button type="button" className="small" onClick={onCopyImage} disabled={!canDownload}>
+                이미지 복사
+              </button>
+            </div>
+          </details>
+
           <button
             type="button"
-            className="primary"
+            className="primary download-action"
             onClick={onDownload}
             disabled={!canDownload}
           >
@@ -343,7 +369,7 @@ const PreviewPanel = forwardRef(function PreviewPanel(
         )}
         <div
           className="canvas-frame"
-          style={{ width: `min(100%, ${(size.width / size.height) * 62}vh)` }}
+          style={{ width: `min(100%, ${(size.width / size.height) * 70}vh)` }}
         >
           <canvas
             ref={canvasRef}
@@ -425,13 +451,10 @@ const PreviewPanel = forwardRef(function PreviewPanel(
 
       <aside className="ready-check" aria-labelledby="ready-check-heading">
         <div className="ready-check-head">
-          <div>
-            <p className="ready-check-kicker">올리기 전에</p>
-            <h3 id="ready-check-heading">게시 전 확인</h3>
-          </div>
           <span className={warningCount ? 'ready-summary warn' : 'ready-summary pass'}>
             {warningCount ? `${warningCount}개 확인` : '준비 완료'}
           </span>
+          <h3 id="ready-check-heading">게시 전 확인</h3>
         </div>
         <ul id="ready-check-list">
           {readyChecks.map((check) => (
@@ -441,16 +464,6 @@ const PreviewPanel = forwardRef(function PreviewPanel(
             </li>
           ))}
         </ul>
-        {state.ratio === '9:16' && (
-          <button
-            type="button"
-            className="small safe-area-toggle"
-            aria-pressed={showSafeArea}
-            onClick={() => setShowSafeArea((visible) => !visible)}
-          >
-            {showSafeArea ? '안전 영역 가이드 숨기기' : '안전 영역 가이드 보기'}
-          </button>
-        )}
       </aside>
     </section>
   );
