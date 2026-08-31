@@ -121,7 +121,9 @@ flowchart LR
 2. 결과 확인의 `보기` 메뉴에서 `원본과 비교`를 누릅니다.
 3. 경계선을 끌거나 방향키·Home·End로 0~100을 움직입니다.
 
-<img src="docs/screenshots/studio.webp" alt="ALTER EGO Studio. 왼쪽 스타일 편집과 오른쪽 큰 결과 미리보기가 나란히 보인다." width="100%">
+<img src="docs/screenshots/studio-current.png" alt="현재 ALTER EGO Studio. 왼쪽 통합 스타일 편집기와 오른쪽 큰 결과 캔버스가 2열로 배치되고, 샘플 이미지 위에서 원본과 완성 카드를 비교하는 경계선이 열려 있다." width="100%">
+
+<p align="center"><sub>현재 Studio · Canvas-first 2열 · 공개 샘플 · 원본 ↔ 완성 카드 비교 50%</sub></p>
 
 Studio는 편집과 결과에 집중하는 2열 구조입니다. 템플릿은 왼쪽 편집기 아래에
 접어 두고, 보기·공유·다운로드는 미리보기 위 한 줄에 모아 기능을 줄이지 않고
