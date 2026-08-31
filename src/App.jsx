@@ -3,7 +3,6 @@ import {
   createInitialState,
   clampState,
   getCanvasSize,
-  LIMITS,
 } from './state/editorState.js';
 import { renderCard } from './render/renderCard.js';
 import { checkTextContrast } from './render/contrast.js';
@@ -29,7 +28,6 @@ import PreviewPanel from './components/PreviewPanel.jsx';
 import HandoffExperiment from './components/HandoffExperiment.jsx';
 import TemplatePanel from './components/TemplatePanel.jsx';
 import TemporalScanner from './components/TemporalScanner.jsx';
-import DropZone from './components/DropZone.jsx';
 import identityBanner from '../배너이미지/짤스튜디오02.avif';
 
 const ACCEPTED_TYPES = ['image/png', 'image/jpeg'];
@@ -633,43 +631,11 @@ export default function App() {
               선을 움직여 시간 속의 다른 나를 먼저 만나보세요.
             </p>
             {/*
-              첫 화면에서 바로 편집을 시작한다.
-
-              여기 있던 '시대 없이 바로 시작' 버튼이 하던 일은 아래로
-              스크롤하는 것뿐이었는데, 그 경로는 상단 내비의 '제작 도구로 ↘'
-              가 이미 갖고 있었다. 약속만 하는 버튼을 지우고 그 자리에 진짜
-              입력을 놓는다.
-
-              바로가기가 아니라 **아래 Studio 와 같은 state 를 쓰는 같은
-              도구**다. 여기서 사진을 고르거나 문구를 치면 아래 미리보기가
-              곧바로 그것을 그린다.
-
-              첫 화면의 주 행동은 여전히 Scanner 의 'ENTER ERA' 하나다.
-              이 컨트롤은 버튼이 아니라 입력이라 그 위계를 흐리지 않는다.
+              사진과 문구 입력은 Studio 한 곳에만 둔다. 첫 화면과 Studio에 같은
+              입력이 반복되자 무엇이 시작점인지 흐려졌고, Scanner보다 입력 상자가
+              먼저 보였다. 첫 화면의 주 행동은 다시 ENTER ERA 하나이며, 바로
+              제작하려는 사용자는 이미 상단의 '제작 도구로 ↘' 경로를 쓸 수 있다.
             */}
-            <div className="hero-actions">
-              <div className="hero-quick" role="group" aria-label="바로 시작">
-                <DropZone
-                  accept="image/png,image/jpeg"
-                  onFile={pickImage}
-                  icon="image"
-                  compact
-                  title={state.image ? '다른 사진으로 바꾸기' : '내 사진 올리기'}
-                  hint={state.image ? state.imageName : 'PNG · JPEG · 끌어다 놓아도 됩니다'}
-                />
-                <label className="hero-quick-text">
-                  <span>문구</span>
-                  <textarea
-                    value={state.text}
-                    rows={2}
-                    maxLength={LIMITS.textMaxLength}
-                    placeholder="넣고 싶은 문구를 적어보세요"
-                    onChange={(event) => update({ text: event.target.value })}
-                  />
-                </label>
-              </div>
-              <span>여기서 바꾼 것은 아래 미리보기에 그대로 반영됩니다.</span>
-            </div>
           </div>
 
           <TemporalScanner onEnterEra={enterHeroEra} />
@@ -754,6 +720,24 @@ export default function App() {
           onUseEra={useEra}
           onPickImage={pickImage}
           onClearImage={clearImage}
+          templateCount={templates.length}
+          templatePanel={(
+            <TemplatePanel
+              embedded
+              templates={templates}
+              name={templateName}
+              editingId={editingId}
+              onNameChange={setTemplateName}
+              onCreate={createTemplate}
+              onUpdate={updateTemplate}
+              onLoad={(id) => applyTemplate(id, false)}
+              onEdit={(id) => applyTemplate(id, true)}
+              onDelete={deleteTemplate}
+              onCancelEdit={cancelEdit}
+              onExportJson={exportJson}
+              onImportJson={importJson}
+            />
+          )}
         />
         <PreviewPanel
           ref={canvasRef}
@@ -771,20 +755,6 @@ export default function App() {
           onRedo={handleRedo}
           canUndo={canUndoNow}
           canRedo={canRedoNow}
-        />
-        <TemplatePanel
-          templates={templates}
-          name={templateName}
-          editingId={editingId}
-          onNameChange={setTemplateName}
-          onCreate={createTemplate}
-          onUpdate={updateTemplate}
-          onLoad={(id) => applyTemplate(id, false)}
-          onEdit={(id) => applyTemplate(id, true)}
-          onDelete={deleteTemplate}
-          onCancelEdit={cancelEdit}
-          onExportJson={exportJson}
-          onImportJson={importJson}
         />
       </div>
 

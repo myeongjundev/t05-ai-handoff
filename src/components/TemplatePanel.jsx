@@ -8,6 +8,7 @@ function formatDate(iso) {
 }
 
 export default function TemplatePanel({
+  embedded = false,
   templates,
   name,
   editingId,
@@ -23,10 +24,14 @@ export default function TemplatePanel({
 }) {
   const editing = templates.find((template) => template.id === editingId) ?? null;
   const canSave = name.trim() !== '';
+  const Wrapper = embedded ? 'div' : 'section';
 
   return (
-    <section className="panel panel-templates" aria-labelledby="template-heading">
-      <h2 id="template-heading"><span>03</span> 저장하기</h2>
+    <Wrapper
+      className={embedded ? 'template-embedded' : 'panel panel-templates'}
+      aria-labelledby={embedded ? undefined : 'template-heading'}
+    >
+      {!embedded && <h2 id="template-heading"><span>03</span> 저장하기</h2>}
 
       <div className="field">
         <label htmlFor="template-name">템플릿 이름</label>
@@ -59,16 +64,17 @@ export default function TemplatePanel({
         </>
       ) : (
         <div className="button-row">
-          <button type="button" className="primary" onClick={onCreate} disabled={!canSave}>
+          <button
+            type="button"
+            className="primary"
+            onClick={onCreate}
+            disabled={!canSave}
+            title="문구·위치·크기·색상·비율을 저장합니다. 배경 이미지는 저장하지 않습니다."
+          >
             현재 설정을 템플릿으로 저장
           </button>
         </div>
       )}
-
-      <p className="hint">
-        문구·위치·크기·색상·비율을 저장합니다. 배경 이미지는 저장하지 않으므로
-        불러온 뒤 다시 골라 주세요.
-      </p>
 
       <h3 className="subheading">
         저장된 템플릿 <span className="count">{templates.length}개</span>
@@ -120,7 +126,12 @@ export default function TemplatePanel({
       </div>
 
       <div className="field" style={{ marginTop: 10 }}>
-        <span className="field-label">설정 가져오기 (JSON)</span>
+        <span
+          className="field-label"
+          title="파일 전체를 검증한 뒤 저장하며, 형식이 맞지 않으면 기존 템플릿을 유지합니다."
+        >
+          설정 가져오기 (JSON)
+        </span>
         <DropZone
           accept="application/json,.json"
           onFile={onImportJson}
@@ -129,11 +140,7 @@ export default function TemplatePanel({
           hint="또는 클릭해서 고르기"
           compact
         />
-        <p className="hint">
-          파일을 모두 확인한 뒤에만 저장합니다. 형식이 맞지 않으면 가져오기를
-          중단하고 지금 저장된 템플릿을 그대로 둡니다.
-        </p>
       </div>
-    </section>
+    </Wrapper>
   );
 }

@@ -62,33 +62,22 @@ export default function EditorPanel({
   onUseEra,
   onPickImage,
   onClearImage,
+  templateCount,
+  templatePanel,
 }) {
   return (
     <section className="panel panel-editor" aria-labelledby="editor-heading">
       <h2 id="editor-heading"><span>01</span> 스타일 만들기</h2>
 
-      <div className="quick-start-guide" aria-label="30초 빠른 시작">
-        <div>
-          <p className="quick-start-kicker">30초 빠른 시작</p>
-          <p className="quick-start-title">세 가지만 바꾸면 카드가 완성됩니다.</p>
-        </div>
-        <ol>
-          <li><span>1</span> 모습</li>
-          <li><span>2</span> 시대</li>
-          <li><span>3</span> 내 사진</li>
-        </ol>
-      </div>
-
       <div className="field persona-picker">
         <p className="persona-eyebrow"><span className="step-number">1</span> 온라인에서 어떤 나인가요?</p>
-        <p className="persona-intro">지금 보여주고 싶은 모습을 골라보세요.</p>
         <div className="preset-grid" role="group" aria-label="온라인에서 보여줄 모습">
           {PRESETS.map((preset) => (
             <button
               key={preset.id}
               type="button"
               className={`preset-button persona-${preset.id}`}
-              title={preset.hint}
+              title={`${preset.name} · ${preset.era} · 추천 ${preset.recommendedRatios.join(' · ')}`}
               aria-pressed={state.persona === preset.id}
               aria-label={`${preset.name}, ${preset.koreanName}, ${preset.era}: ${preset.hint}`}
               onClick={() => onUsePreset(preset.id)}
@@ -98,25 +87,18 @@ export default function EditorPanel({
                 <span className="persona-thumb-line" />
                 <span className="persona-thumb-line is-short" />
               </span>
-              <span className="persona-name">{preset.name}</span>
-              <span className="persona-korean">{preset.koreanName}</span>
-              <span className="persona-era">{preset.era}</span>
+              <span className="persona-name">{preset.koreanName}</span>
               <span className="persona-hint">{preset.hint}</span>
-              <span className="persona-ratios">
-                추천 {preset.recommendedRatios.join(' · ')}
-              </span>
             </button>
           ))}
         </div>
         <p className="hint">
-          선택한 모습은 레이아웃만 바꿉니다. 화면 비율과 쓰던 문구·이미지는 그대로
-          두고, 어울리는 비율은 미리보기 위에 추천으로만 표시합니다.
+          레이아웃만 바뀝니다. 사진과 문구는 그대로입니다.
         </p>
       </div>
 
       <div className="field era-picker">
         <p className="persona-eyebrow"><span className="step-number">2</span> 어느 시대로 접속할까요?</p>
-        <p className="persona-intro">기억하고 싶은 인터넷 시대를 골라보세요.</p>
         <div className="era-timeline" role="group" aria-label="인터넷 시대">
           {ERAS.map((era) => (
             <button
@@ -130,7 +112,6 @@ export default function EditorPanel({
             </button>
           ))}
         </div>
-        <p className="hint">시대를 바꿔도 입력한 이미지와 문구는 그대로입니다.</p>
       </div>
 
       <div className="field">
@@ -147,9 +128,8 @@ export default function EditorPanel({
             <span className="file-dot" aria-hidden="true" />
             {state.imageName}
           </p>
-        ) : (
-          <p className="hint">이미지를 고르지 않으면 배경색만 사용합니다.</p>
-        )}
+        ) : null}
+        <p className="hint">사진은 이 브라우저 밖으로 나가지 않습니다.</p>
         {state.image && (
           <div className="button-row" style={{ marginTop: 8 }}>
             <button type="button" className="small" onClick={onClearImage}>
@@ -173,9 +153,6 @@ export default function EditorPanel({
             </button>
           ))}
         </div>
-        <p className="hint">
-          가득 채우기는 넘치는 부분이 잘리고, 전체 보이기는 여백이 생깁니다.
-        </p>
       </div>
 
       <div className="field">
@@ -331,7 +308,7 @@ export default function EditorPanel({
           disabled={state.transparentBg}
           onChange={(event) => onChange({ bgColor: event.target.value })}
         />
-        <p className="hint">
+        <p className="field-inline">
           <label htmlFor="transparent-bg">
             <input
               id="transparent-bg"
@@ -343,6 +320,10 @@ export default function EditorPanel({
           </label>
         </p>
       </div>
+      </Group>
+
+      <Group title="내 템플릿" summary={`${templateCount}개 저장됨`}>
+        {templatePanel}
       </Group>
     </section>
   );
