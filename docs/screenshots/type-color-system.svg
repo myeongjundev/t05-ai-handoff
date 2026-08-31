@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="520" viewBox="0 0 1400 520" role="img" aria-labelledby="title desc">
+  <title id="title">ALTER EGO 타입과 컬러 시스템</title>
+  <desc id="desc">Noto Sans KR, Archivo Narrow, Georgia 타입 조합과 Apricot, Paper, Ice, Indigo, Ink, Slate, Stage, Success 팔레트</desc>
+  <rect width="1400" height="520" rx="28" fill="#fdf0e7"/>
+  <rect x="1" y="1" width="1398" height="518" rx="27" fill="none" stroke="#ecdfd4" stroke-width="2"/>
+
+  <text x="64" y="68" fill="#1e40af" font-family="'Archivo Narrow', Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="5">ALTER / EGO · TYPE &amp; COLOR</text>
+  <line x1="64" y1="94" x2="1336" y2="94" stroke="#ecdfd4" stroke-width="2"/>
+
+  <text x="64" y="146" fill="#4f6480" font-family="'Archivo Narrow', Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="3">DISPLAY · NOTO SANS KR 700</text>
+  <text x="64" y="226" fill="#1a2c4a" font-family="'Noto Sans KR', 'Malgun Gothic', sans-serif" font-size="58" font-weight="700" letter-spacing="-3">같은 사진. 다른 시대.</text>
+  <text x="64" y="286" fill="#1e40af" font-family="Georgia, serif" font-size="48" font-style="italic">다른 나.</text>
+
+  <text x="64" y="348" fill="#4f6480" font-family="'Archivo Narrow', Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="3">META · ARCHIVO NARROW 600</text>
+  <text x="64" y="382" fill="#1a2c4a" font-family="'Archivo Narrow', Arial, sans-serif" font-size="25" font-weight="600" letter-spacing="4">TIME-TRAVEL ID STUDIO · 2004 / 2012 / 2026</text>
+  <text x="64" y="430" fill="#4f6480" font-family="'Noto Sans KR', 'Malgun Gothic', sans-serif" font-size="18">본문과 조작은 또렷하게, 시대 정보는 좁고 리듬감 있게.</text>
+
+  <g transform="translate(788 136)">
+    <g>
+      <rect width="126" height="126" rx="18" fill="#fdf0e7" stroke="#d9c9bd"/>
+      <text x="14" y="88" fill="#1a2c4a" font-family="Arial, sans-serif" font-size="14" font-weight="700">APRICOT</text>
+      <text x="14" y="110" fill="#4f6480" font-family="monospace" font-size="13">#FDF0E7</text>
+    </g>
+    <g transform="translate(140)">
+      <rect width="126" height="126" rx="18" fill="#fffcf9" stroke="#d9c9bd"/>
+      <text x="14" y="88" fill="#1a2c4a" font-family="Arial, sans-serif" font-size="14" font-weight="700">PAPER</text>
+      <text x="14" y="110" fill="#4f6480" font-family="monospace" font-size="13">#FFFCF9</text>
+    </g>
+    <g transform="translate(280)">
+      <rect width="126" height="126" rx="18" fill="#eaf1fb" stroke="#b9c8dc"/>
+      <text x="14" y="88" fill="#1a2c4a" font-family="Arial, sans-serif" font-size="14" font-weight="700">ICE</text>
+      <text x="14" y="110" fill="#4f6480" font-family="monospace" font-size="13">#EAF1FB</text>
+    </g>
+    <g transform="translate(420)">
+      <rect width="126" height="126" rx="18" fill="#1e40af"/>
+      <text x="14" y="88" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700">INDIGO</text>
+      <text x="14" y="110" fill="#ffffff" font-family="monospace" font-size="13">#1E40AF</text>
+    </g>
+
+    <g transform="translate(0 142)">
+      <rect width="126" height="126" rx="18" fill="#1a2c4a"/>
+      <text x="14" y="88" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700">INK</text>
+      <text x="14" y="110" fill="#ffffff" font-family="monospace" font-size="13">#1A2C4A</text>
+    </g>
+    <g transform="translate(140 142)">
+      <rect width="126" height="126" rx="18" fill="#4f6480"/>
+      <text x="14" y="88" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700">SLATE</text>
+      <text x="14" y="110" fill="#ffffff" font-family="monospace" font-size="13">#4F6480</text>
+    </g>
+    <g transform="translate(280 142)">
+      <rect width="126" height="126" rx="18" fill="#16223a"/>
+      <text x="14" y="88" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700">STAGE</text>
+      <text x="14" y="110" fill="#ffffff" font-family="monospace" font-size="13">#16223A</text>
+    </g>
+    <g transform="translate(420 142)">
+      <rect width="126" height="126" rx="18" fill="#0e7053"/>
+      <text x="14" y="88" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700">SUCCESS</text>
+      <text x="14" y="110" fill="#ffffff" font-family="monospace" font-size="13">#0E7053</text>
+    </g>
+  </g>
+</svg>

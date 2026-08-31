@@ -51,6 +51,23 @@ AI A와 AI B 사이의 대화 대신 코드·검사·`HANDOFF.md`만 전달했�
 읽는 구획은 자동으로 강조되고, 모바일에서는 콘텐츠를 가리지 않도록 작은 레일로
 접힙니다. 공유 링크의 `#card=` 상태는 구획을 이동해도 유지됩니다.
 
+## Type & Color
+
+<img src="docs/screenshots/type-color-system.svg" alt="ALTER EGO의 Noto Sans KR, Archivo Narrow, Georgia 타입 조합과 Apricot, Indigo 중심 컬러 팔레트" width="100%">
+
+| 역할 | 시스템 | 적용 |
+|---|---|---|
+| Korean UI | `Noto Sans KR` 400–900 | 제목·본문·버튼을 같은 글자 골격으로 연결 |
+| Display & Meta | `Archivo Narrow` 600–700 | 시대 숫자·영문 레이블·실험 메타데이터 |
+| Editorial Accent | `Georgia Italic` | Hero의 `다른 나.`와 2004 시대 감성 강조 |
+| Primary | Indigo `#1E40AF` | 채운 면은 주 행동, 테두리는 보조 행동 |
+| Surface | Apricot `#FDF0E7` · Paper `#FFFCF9` · Ice `#EAF1FB` | 서사·작업 패널·선택 영역 구분 |
+| Content | Ink `#1A2C4A` · Slate `#4F6480` | 제목과 보조 정보의 읽기 위계 |
+
+강조색은 Indigo 하나만 사용하고, 중요도는 색을 더 늘리는 대신 **채움·테두리·크기**로
+나눴습니다. 주요 조합의 글자 대비와 조작 경계는 Chromium 대비 검사 8개가 자동으로
+확인합니다.
+
 ## 이 실험이 묻는 것
 
 > 첫 번째 AI의 대화를 전달하지 않아도, 다음 AI가 문서만 읽고 같은 프로젝트를
