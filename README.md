@@ -2,6 +2,7 @@
 > Claude가 검사 1~3을 구현하고 Codex가 [인계 문서](docs/HANDOFF.md)만을 작업 기준으로
 > 검사 4~10과 전체 회귀 검증을 이어받았습니다. 기준은 [실험 계획](docs/EXPERIMENT_PLAN.md),
 > Codex의 수행 내역과 절차상 실수까지 포함한 결과는 [AI B 작업 기록](docs/AI-B-LOG.md)에 남겼습니다.
+> Claude가 받은 지시·구현·인계·비교 자료는 [Claude 작업 재료 색인](docs/CLAUDE-MATERIALS.md)에서 확인할 수 있습니다.
 
 <div align="center">
 
