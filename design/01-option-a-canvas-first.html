@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; }
+    a { color: #1e40af; } a:hover { color: #16307f; }
+    .panel { background: #fffcf9; border: 1px solid #ecdfd4; border-radius: 18px; }
+    .btn { font-family: inherit; font-size: 14px; padding: 8px 14px; border-radius: 8px; border: 1px solid #6f86a3; background: #eaf1fb; color: #1a2c4a; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .btn.primary { background: #1e40af; border-color: #1e40af; color: #ffffff; font-weight: 700; }
+    .btn.on { background: #1e40af; border-color: #1e40af; color: #ffffff; font-weight: 700; }
+    .btn.sm { padding: 6px 10px; font-size: 13px; }
+    .step-no { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 999px; background: #1e40af; color: #ffffff; font-size: 12px; font-weight: 800; }
+    .eyebrow { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 14px; font-weight: 700; color: #1a2c4a; }
+    .hint { margin: 6px 0 0; color: #4f6480; font-size: 12px; line-height: 1.5; }
+    .fold { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border: 1px solid #6f86a3; border-radius: 8px; background: #eaf1fb; font-size: 13px; }
+    .fold span:last-child { color: #4f6480; font-size: 12px; }
+    .sec-title { margin: 0 0 14px; display: flex; align-items: center; gap: 8px; font-size: 14px; letter-spacing: 0.04em; color: #4f6480; text-transform: uppercase; }
+    .sec-title b { color: #1e40af; font-size: 11px; font-weight: 800; }
+    .win { display: flex; gap: 10px; align-items: baseline; }
+    .win strong { font-size: 22px; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; min-height: 1210px; background: #fdf0e7; color: #1a2c4a; font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', system-ui, sans-serif; font-size: 15px; line-height: 1.6; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+    <div>
+      <p style="margin: 0 0 4px; color: #1e40af; font-size: 11px; font-weight: 800; letter-spacing: 0.16em">A · 캔버스 우선 2단</p>
+      <h2 style="margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -0.03em">만들기는 왼쪽, 결과는 오른쪽. 그 둘뿐입니다.</h2>
+    </div>
+    <p style="margin: 0; max-width: 420px; color: #4f6480; font-size: 13px; text-align: right">세 번째 열을 없애고 템플릿을 왼쪽 아래 접이식으로 내렸습니다. 캔버스 위 조작 줄 셋은 캔버스에 붙은 한 줄이 됩니다.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 18px; align-items: start">
+
+    <!-- 왼쪽: 만들기 -->
+    <section class="panel" style="padding: 18px; display: flex; flex-direction: column; gap: 18px">
+      <p class="sec-title"><b>01</b> 만들기</p>
+
+      <div>
+        <p class="eyebrow"><span class="step-no">1</span> 어떤 나인가요?</p>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+          <div style="border: 1px solid #6f86a3; border-radius: 12px; background: #f7faff; padding: 10px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <span style="width: 34px; height: 42px; border-radius: 5px; background: #ffffff; border: 1px solid #d7dee7; display: flex; flex-direction: column; justify-content: flex-end; gap: 3px; padding: 5px">
+              <span style="height: 3px; background: #b9c4d4; border-radius: 2px"></span>
+              <span style="height: 3px; width: 60%; background: #d7dee7; border-radius: 2px"></span>
+            </span>
+            <strong style="font-size: 13px">기본</strong>
+            <span style="color: #4f6480; font-size: 11px; text-align: center">담백한 기록</span>
+          </div>
+          <div style="border: 2px solid #1e40af; border-radius: 12px; background: #eaf1fb; padding: 9px 7px; display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <span style="width: 34px; height: 42px; border-radius: 5px; background: #ffffff; border: 1px solid #b9c4d4; display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 5px">
+              <span style="height: 3px; background: #1e40af; border-radius: 2px"></span>
+              <span style="height: 3px; width: 60%; margin: 0 auto; background: #9db4e0; border-radius: 2px"></span>
+            </span>
+            <strong style="font-size: 13px; color: #1e40af">소셜</strong>
+            <span style="color: #1e40af; font-size: 11px; text-align: center">보여지는 나</span>
+          </div>
+          <div style="border: 1px solid #6f86a3; border-radius: 12px; background: #f7faff; padding: 10px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px">
+            <span style="width: 34px; height: 42px; border-radius: 5px; background: #ffffff; border: 1px solid #d7dee7; display: flex; flex-direction: column; justify-content: flex-start; gap: 3px; padding: 5px">
+              <span style="height: 3px; background: #b9c4d4; border-radius: 2px"></span>
+              <span style="height: 3px; width: 60%; background: #d7dee7; border-radius: 2px"></span>
+            </span>
+            <strong style="font-size: 13px">친한 친구</strong>
+            <span style="color: #4f6480; font-size: 11px; text-align: center">가까운 사이</span>
+          </div>
+        </div>
+        <p class="hint">레이아웃만 바뀝니다. 사진과 문구는 그대로입니다.</p>
+      </div>
+
+      <div>
+        <p class="eyebrow"><span class="step-no">2</span> 어느 시대로?</p>
+        <div style="display: flex; gap: 8px">
+          <button class="btn" style="flex: 1; flex-direction: column; align-items: center; gap: 1px; padding: 7px 4px">2004<span style="font-size: 10px; color: #4f6480">개인 홈</span></button>
+          <button class="btn" style="flex: 1; flex-direction: column; align-items: center; gap: 1px; padding: 7px 4px">2012<span style="font-size: 10px; color: #4f6480">피드</span></button>
+          <button class="btn on" style="flex: 1; flex-direction: column; align-items: center; gap: 1px; padding: 7px 4px">2026<span style="font-size: 10px; color: #ccdcf5">숏폼</span></button>
+        </div>
+      </div>
+
+      <div>
+        <p class="eyebrow"><span class="step-no">3</span> 사진과 문구</p>
+        <div style="border: 1px dashed #6f86a3; border-radius: 12px; background: #f7faff; padding: 12px 14px; display: flex; align-items: center; gap: 12px">
+          <span style="width: 34px; height: 34px; border-radius: 8px; background: #eaf1fb; border: 1px solid #b9c4d4; display: flex; align-items: center; justify-content: center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1e40af" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.8"/><path d="M3 16l5-4 4 3 3-2 6 5"/></svg>
+          </span>
+          <span style="display: flex; flex-direction: column">
+            <strong style="font-size: 13px">이미지 끌어다 놓기</strong>
+            <span style="color: #4f6480; font-size: 11px">또는 클릭 · PNG · JPEG</span>
+          </span>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 8px">
+          <button class="btn sm on" style="flex: 1">가득 채우기</button>
+          <button class="btn sm" style="flex: 1">전체 보이기</button>
+        </div>
+        <textarea style="width: 100%; margin-top: 8px; padding: 8px 10px; background: #eaf1fb; border: 1px solid #6f86a3; border-radius: 8px; color: #1a2c4a; font-family: inherit; font-size: 14px; line-height: 1.5; min-height: 72px; resize: vertical">오늘도
+무사히</textarea>
+        <p class="hint">사진은 이 브라우저 밖으로 나가지 않습니다.</p>
+      </div>
+
+      <div style="height: 1px; background: #ecdfd4"></div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <p style="margin: 0; color: #4f6480; font-size: 11px; font-weight: 700; letter-spacing: 0.1em">더 다듬기</p>
+        <div class="fold"><span>문구 배치</span><span>50% · 50% · 140px ▾</span></div>
+        <div class="fold"><span>색과 테두리</span><span>#ffffff ▾</span></div>
+        <div class="fold"><span>내 템플릿</span><span>0개 저장됨 ▾</span></div>
+      </div>
+    </section>
+
+    <!-- 오른쪽: 결과 -->
+    <section style="display: flex; flex-direction: column; gap: 12px">
+
+      <div class="panel" style="padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <div style="display: flex; gap: 6px">
+            <button class="btn sm on">1:1</button>
+            <button class="btn sm">4:5</button>
+            <button class="btn sm">9:16</button>
+          </div>
+          <span style="color: #4f6480; font-size: 12px">소셜 · 2026 엔 <a href="#" style="font-weight: 700">4:5 추천</a></span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <div style="display: flex; gap: 4px; padding-right: 8px; border-right: 1px solid #ecdfd4">
+            <button class="btn sm" title="실행 취소" aria-label="실행 취소" style="padding: 6px 9px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10H9"/></svg>
+            </button>
+            <button class="btn sm" title="다시 실행" aria-label="다시 실행" style="padding: 6px 9px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14l5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h6"/></svg>
+            </button>
+          </div>
+          <button class="btn sm">보기 ▾</button>
+          <button class="btn sm">공유 ▾</button>
+          <button class="btn primary">이미지 다운로드</button>
+        </div>
+      </div>
+
+      <div class="panel" style="padding: 18px; box-shadow: 0 18px 60px rgba(0, 0, 0, 0.22); display: flex; flex-direction: column; align-items: center; gap: 12px">
+        <div style="width: 560px; height: 560px; background: #16223a; border-radius: 12px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden">
+          <span style="position: absolute; top: 20px; left: 22px; color: #ccdcf5; font-size: 14px">지금 · 실시간</span>
+          <strong style="color: #ffffff; font-size: 78px; line-height: 1.05; text-align: center; letter-spacing: -0.02em">오늘도<br>무사히</strong>
+          <span style="position: absolute; bottom: 20px; left: 22px; color: #ccdcf5; font-size: 14px">#오늘의기록</span>
+        </div>
+        <p style="margin: 0; color: #4f6480; font-size: 12px; text-align: center">1080 × 1080px · 문구를 끌어서 옮길 수 있습니다.</p>
+      </div>
+
+      <div class="panel" style="padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span style="padding: 3px 10px; border-radius: 999px; background: #eaf1fb; border: 1px solid #0e7053; color: #0e7053; font-size: 12px; font-weight: 700">준비 완료</span>
+          <strong style="font-size: 13px">게시 전 확인</strong>
+        </div>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; color: #4f6480; font-size: 12px">
+          <span style="display: inline-flex; align-items: center; gap: 5px"><span style="color: #0e7053; font-weight: 800">✓</span> PNG 준비</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px"><span style="color: #0e7053; font-weight: 800">✓</span> 문구 크기</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px"><span style="color: #0e7053; font-weight: 800">✓</span> 대비 18.9:1</span>
+          <span style="display: inline-flex; align-items: center; gap: 5px"><span style="color: #0e7053; font-weight: 800">✓</span> 안전 영역</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="panel" style="padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap">
+    <div class="win"><strong>23 → 14</strong><span style="color: #4f6480; font-size: 13px">영역</span></div>
+    <div class="win"><strong>8 → 3</strong><span style="color: #4f6480; font-size: 13px">설명 문단</span></div>
+    <div class="win"><strong>3 → 1</strong><span style="color: #4f6480; font-size: 13px">캔버스 위 조작 줄</span></div>
+    <div class="win"><strong>560px</strong><span style="color: #4f6480; font-size: 13px">캔버스 (지금 460px)</span></div>
+    <p style="margin: 0; max-width: 400px; color: #4f6480; font-size: 12px; line-height: 1.5">기능은 하나도 지우지 않았습니다. 보기 · 공유 · 템플릿은 접혀 있을 뿐, 한 번의 클릭 안에 그대로 있습니다.</p>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; }
+    a { color: #1e40af; } a:hover { color: #16307f; }
+    .panel { background: #fffcf9; border: 1px solid #ecdfd4; border-radius: 18px; }
+    .btn { font-family: inherit; font-size: 14px; padding: 8px 14px; border-radius: 8px; border: 1px solid #6f86a3; background: #eaf1fb; color: #1a2c4a; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .btn.primary { background: #1e40af; border-color: #1e40af; color: #ffffff; font-weight: 700; }
+    .btn.on { background: #1e40af; border-color: #1e40af; color: #ffffff; font-weight: 700; }
+    .btn.sm { padding: 6px 10px; font-size: 13px; }
+    .step { border: 1px solid #ecdfd4; border-radius: 14px; background: #fffcf9; }
+    .step-head { display: flex; align-items: center; gap: 10px; padding: 13px 16px; }
+    .step-head .no { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 999px; background: #eaf1fb; border: 1px solid #6f86a3; color: #4f6480; font-size: 12px; font-weight: 800; }
+    .step.done .no { background: #0e7053; border-color: #0e7053; color: #ffffff; }
+    .step.open .no { background: #1e40af; border-color: #1e40af; color: #ffffff; }
+    .step-head strong { flex: 1; font-size: 15px; }
+    .step-head .val { color: #4f6480; font-size: 13px; }
+    .sticky-tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: #eaf1fb; border: 1px solid #6f86a3; color: #1e40af; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; min-height: 1210px; background: #fdf0e7; color: #1a2c4a; font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', system-ui, sans-serif; font-size: 15px; line-height: 1.6; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+
+  <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+    <div>
+      <p style="margin: 0 0 4px; color: #1e40af; font-size: 11px; font-weight: 800; letter-spacing: 0.16em">B · 한 열 · 한 번에 한 단계</p>
+      <h2 style="margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -0.03em">카드는 위에 붙어 있고, 아래로 한 단계씩 내려갑니다.</h2>
+    </div>
+    <p style="margin: 0; max-width: 420px; color: #4f6480; font-size: 13px; text-align: right">열을 하나로 줄이면 좁은 화면과 넓은 화면이 같은 구조가 됩니다. 열려 있는 단계는 언제나 하나뿐입니다.</p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: minmax(0, 1fr) 430px; gap: 26px; align-items: start">
+
+    <!-- 넓은 화면 -->
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <span class="sticky-tag" style="align-self: flex-start">화면 위에 고정</span>
+
+      <div class="panel" style="padding: 14px; display: flex; gap: 16px; align-items: center; box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18)">
+        <div style="width: 300px; height: 300px; background: #16223a; border-radius: 12px; position: relative; display: flex; align-items: center; justify-content: center; flex: none">
+          <span style="position: absolute; top: 12px; left: 14px; color: #ccdcf5; font-size: 11px">지금 · 실시간</span>
+          <strong style="color: #ffffff; font-size: 44px; line-height: 1.05; text-align: center; letter-spacing: -0.02em">오늘도<br>무사히</strong>
+          <span style="position: absolute; bottom: 12px; left: 14px; color: #ccdcf5; font-size: 11px">#오늘의기록</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; min-width: 0">
+          <div style="display: flex; gap: 6px">
+            <button class="btn sm on">1:1</button>
+            <button class="btn sm">4:5</button>
+            <button class="btn sm">9:16</button>
+            <span style="color: #4f6480; font-size: 12px; align-self: center">4:5 추천</span>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap">
+            <button class="btn sm" style="padding: 6px 9px" aria-label="실행 취소">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10H9"/></svg>
+            </button>
+            <button class="btn sm" style="padding: 6px 9px" aria-label="다시 실행">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14l5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h6"/></svg>
+            </button>
+            <button class="btn sm">보기 ▾</button>
+            <button class="btn sm">공유 ▾</button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+            <span style="padding: 3px 10px; border-radius: 999px; background: #eaf1fb; border: 1px solid #0e7053; color: #0e7053; font-size: 12px; font-weight: 700">준비 완료</span>
+            <span style="color: #4f6480; font-size: 12px">4가지 확인을 모두 지났습니다</span>
+          </div>
+          <p style="margin: 0; color: #4f6480; font-size: 12px">1080 × 1080px · 문구를 끌어서 옮길 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px">
+        <div class="step done">
+          <div class="step-head"><span class="no">✓</span><strong>어떤 나인가요?</strong><span class="val">소셜 · 보여지는 나</span><span style="color: #4f6480">▾</span></div>
+        </div>
+        <div class="step done">
+          <div class="step-head"><span class="no">✓</span><strong>어느 시대로?</strong><span class="val">2026 · 숏폼</span><span style="color: #4f6480">▾</span></div>
+        </div>
+        <div class="step open" style="border-color: #1e40af">
+          <div class="step-head"><span class="no">3</span><strong>사진과 문구</strong><span style="color: #1e40af">▴</span></div>
+          <div style="padding: 0 16px 16px; display: flex; flex-direction: column; gap: 10px">
+            <div style="border: 1px dashed #6f86a3; border-radius: 12px; background: #f7faff; padding: 14px 16px; display: flex; align-items: center; gap: 12px">
+              <span style="width: 34px; height: 34px; border-radius: 8px; background: #eaf1fb; border: 1px solid #b9c4d4; display: flex; align-items: center; justify-content: center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1e40af" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.8"/><path d="M3 16l5-4 4 3 3-2 6 5"/></svg>
+              </span>
+              <span style="display: flex; flex-direction: column">
+                <strong style="font-size: 13px">이미지 끌어다 놓기</strong>
+                <span style="color: #4f6480; font-size: 11px">또는 클릭 · PNG · JPEG · 이 브라우저 밖으로 나가지 않습니다</span>
+              </span>
+            </div>
+            <div style="display: flex; gap: 8px">
+              <button class="btn sm on" style="flex: 1">가득 채우기</button>
+              <button class="btn sm" style="flex: 1">전체 보이기</button>
+            </div>
+            <textarea style="width: 100%; padding: 8px 10px; background: #eaf1fb; border: 1px solid #6f86a3; border-radius: 8px; color: #1a2c4a; font-family: inherit; font-size: 14px; line-height: 1.5; min-height: 64px; resize: vertical">오늘도
+무사히</textarea>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-head"><span class="no">4</span><strong>더 다듬기</strong><span class="val">배치 · 색과 테두리</span><span style="color: #4f6480">▾</span></div>
+        </div>
+        <div class="step">
+          <div class="step-head"><span class="no">5</span><strong>내 템플릿</strong><span class="val">0개 저장됨</span><span style="color: #4f6480">▾</span></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 4px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-color: #6f86a3">
+        <span style="color: #4f6480; font-size: 12px">화면 아래에 항상 붙어 있는 마지막 줄</span>
+        <button class="btn primary">이미지 다운로드</button>
+      </div>
+    </div>
+
+    <!-- 좁은 화면 -->
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <span class="sticky-tag" style="align-self: flex-start">같은 구조 · 390px 화면</span>
+      <div style="width: 390px; background: #fdf0e7; border: 1px solid #ecdfd4; border-radius: 22px; padding: 12px; display: flex; flex-direction: column; gap: 8px">
+        <div style="background: #fffcf9; border: 1px solid #ecdfd4; border-radius: 14px; padding: 10px; display: flex; flex-direction: column; gap: 8px">
+          <div style="width: 100%; height: 232px; background: #16223a; border-radius: 10px; display: flex; align-items: center; justify-content: center">
+            <strong style="color: #ffffff; font-size: 40px; line-height: 1.05; text-align: center">오늘도<br>무사히</strong>
+          </div>
+          <div style="display: flex; gap: 6px; justify-content: space-between">
+            <span style="display: flex; gap: 5px">
+              <button class="btn sm on" style="padding: 5px 9px">1:1</button>
+              <button class="btn sm" style="padding: 5px 9px">4:5</button>
+              <button class="btn sm" style="padding: 5px 9px">9:16</button>
+            </span>
+            <span style="display: flex; gap: 5px">
+              <button class="btn sm" style="padding: 5px 9px">보기 ▾</button>
+              <button class="btn sm" style="padding: 5px 9px">공유 ▾</button>
+            </span>
+          </div>
+        </div>
+        <div class="step done"><div class="step-head" style="padding: 10px 12px"><span class="no">✓</span><strong style="font-size: 14px">어떤 나인가요?</strong><span class="val" style="font-size: 12px">소셜</span></div></div>
+        <div class="step done"><div class="step-head" style="padding: 10px 12px"><span class="no">✓</span><strong style="font-size: 14px">어느 시대로?</strong><span class="val" style="font-size: 12px">2026</span></div></div>
+        <div class="step open" style="border-color: #1e40af">
+          <div class="step-head" style="padding: 10px 12px"><span class="no">3</span><strong style="font-size: 14px">사진과 문구</strong><span style="color: #1e40af">▴</span></div>
+          <div style="padding: 0 12px 12px; display: flex; flex-direction: column; gap: 8px">
+            <div style="border: 1px dashed #6f86a3; border-radius: 10px; background: #f7faff; padding: 12px; text-align: center; font-size: 13px">이미지 고르기</div>
+            <textarea style="width: 100%; padding: 8px 10px; background: #eaf1fb; border: 1px solid #6f86a3; border-radius: 8px; color: #1a2c4a; font-family: inherit; font-size: 14px; min-height: 52px; resize: vertical">오늘도
+무사히</textarea>
+          </div>
+        </div>
+        <div class="step"><div class="step-head" style="padding: 10px 12px"><span class="no">4</span><strong style="font-size: 14px">더 다듬기</strong><span style="color: #4f6480">▾</span></div></div>
+        <div class="step"><div class="step-head" style="padding: 10px 12px"><span class="no">5</span><strong style="font-size: 14px">내 템플릿</strong><span style="color: #4f6480">▾</span></div></div>
+        <button class="btn primary" style="justify-content: center; margin-top: 2px">이미지 다운로드</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+    <div class="panel" style="padding: 14px 18px; border-left: 3px solid #0e7053">
+      <p style="margin: 0 0 4px; color: #0e7053; font-size: 11px; font-weight: 800; letter-spacing: 0.14em">얻는 것</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.55">처음 온 사람이 헤맬 수 없습니다. 열려 있는 단계가 하나뿐이라 다음에 할 일이 늘 분명하고, 좁은 화면과 넓은 화면이 <strong>같은 코드, 같은 순서</strong>가 됩니다.</p>
+    </div>
+    <div class="panel" style="padding: 14px 18px; border-left: 3px solid #b3261e">
+      <p style="margin: 0 0 4px; color: #b3261e; font-size: 11px; font-weight: 800; letter-spacing: 0.14em">잃는 것</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.55">슬라이더를 조금씩 움직이며 카드를 보는 작업이 불편해집니다. 넓은 화면에서는 오른쪽이 <strong>계속 비어 있고</strong>, 지금 코드와 DOM 구조가 가장 많이 달라지는 안입니다.</p>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
