@@ -2308,6 +2308,44 @@ body:has(.panel-preview.is-showcase) .to-top { display: none; }
   color: var(--muted);
   line-height: 1.8;
 }
+.handoff-review-button {
+  margin-top: 22px;
+  padding: 11px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: 700 12px/1 var(--font-meta);
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+.handoff-review-button:hover { transform: translateY(-1px); }
+.handoff-review-button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.handoff-review {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid rgba(30, 64, 175, .28);
+  border-radius: 18px;
+  background: rgba(30, 64, 175, .06);
+}
+.handoff-review ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  counter-reset: review-step;
+}
+.handoff-review li { display: grid; gap: 5px; counter-increment: review-step; }
+.handoff-review li strong::before {
+  content: counter(review-step, decimal-leading-zero) ' / ';
+  color: var(--accent);
+  font-family: var(--font-meta);
+}
+.handoff-review li span,
+.handoff-note { color: var(--muted); font-size: .82rem; line-height: 1.6; }
+.handoff-review > a { color: var(--accent); font-weight: 700; text-decoration: none; }
 
 .handoff-flow {
   display: grid;
@@ -2334,8 +2372,8 @@ body:has(.panel-preview.is-showcase) .to-top { display: none; }
   letter-spacing: .12em;
 }
 .handoff-flow strong { display: block; margin-top: 8px; }
+.handoff-flow small { color: var(--accent); font-family: var(--font-meta); font-size: 10px; }
 .handoff-flow p,
-.handoff-lessons li,
 .handoff-disclosure { color: var(--muted); line-height: 1.65; }
 
 .handoff-grid {
@@ -2353,16 +2391,81 @@ body:has(.panel-preview.is-showcase) .to-top { display: none; }
 }
 .handoff-items li { display: flex; align-items: center; gap: 8px; }
 .handoff-items span { color: var(--accent); font-family: var(--font-meta); font-size: 10px; }
+.handoff-note { margin: 18px 0 0; }
 .handoff-table-wrap { overflow-x: auto; }
 .handoff-experiment table { width: 100%; border-collapse: collapse; font-size: .9rem; }
 .handoff-experiment th,
 .handoff-experiment td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; }
 .handoff-experiment thead th { color: var(--accent); }
-.handoff-lessons { margin-top: 14px; }
-.handoff-lessons ul { margin: 0; padding-left: 1.2rem; }
+.handoff-evidence {
+  display: grid;
+  grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr);
+  gap: clamp(20px, 4vw, 48px);
+  margin-top: 14px;
+  padding: clamp(20px, 4vw, 36px);
+  border-radius: 18px;
+  background: var(--showcase-bg);
+  color: var(--accent-ink);
+}
+.handoff-evidence h3 { margin: 8px 0 12px; font-size: clamp(22px, 3vw, 36px); line-height: 1.25; }
+.handoff-evidence .handoff-kicker { color: #93c5fd; }
+.handoff-evidence > div > p:last-child { color: var(--accent-soft); line-height: 1.7; }
+.handoff-checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.handoff-checks li {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .055);
+}
+.handoff-checks > li > span { color: #93c5fd; font: 700 11px/1 var(--font-meta); }
+.handoff-checks strong,
+.handoff-checks small { display: block; }
+.handoff-checks strong { overflow: hidden; font-size: .78rem; text-overflow: ellipsis; white-space: nowrap; }
+.handoff-checks small { margin-top: 3px; color: #d4dfef; font-size: .65rem; }
+.handoff-checks b { color: #86efac; font: 700 9px/1 var(--font-meta); letter-spacing: .08em; }
+.handoff-checks .is-ai-a { border-left: 3px solid #c4b5fd; }
+.handoff-checks .is-ai-b { border-left: 3px solid #60a5fa; }
+.handoff-conclusion {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+.handoff-conclusion article {
+  padding: clamp(20px, 3vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--field);
+}
+.handoff-conclusion ol { display: grid; gap: 16px; margin: 0; padding-left: 1.2rem; }
+.handoff-conclusion li { padding-left: 4px; }
+.handoff-conclusion li strong,
+.handoff-conclusion li span { display: block; }
+.handoff-conclusion li span { margin-top: 4px; color: var(--muted); font-size: .82rem; line-height: 1.55; }
+.handoff-three-lines { display: grid; gap: 14px; margin: 0; }
+.handoff-three-lines div { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.handoff-three-lines div:last-child { padding-bottom: 0; border-bottom: 0; }
+.handoff-three-lines dt { color: var(--accent); font: 700 10px/1.2 var(--font-meta); letter-spacing: .08em; }
+.handoff-three-lines dd { margin: 6px 0 0; line-height: 1.55; }
 .handoff-disclosure { margin: 14px 2px 0; font-size: .82rem; }
 
 @media (max-width: 760px) {
   .handoff-flow,
-  .handoff-grid { grid-template-columns: 1fr; }
+  .handoff-grid,
+  .handoff-evidence,
+  .handoff-conclusion,
+  .handoff-review ol { grid-template-columns: 1fr; }
+  .handoff-checks { grid-template-columns: 1fr; }
 }
