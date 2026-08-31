@@ -1,7 +1,13 @@
-import { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { RATIO_KEYS, getCanvasSize } from '../state/editorState.js';
 import { buildReadyChecks } from '../state/readyCheck.js';
 import { getRecommendedRatio } from '../state/presets.js';
+import {
+  canCompare,
+  createCompareState,
+  syncCompareToImage,
+  toggleCompare,
+} from '../state/compareMode.js';
 
 /**
  * 미리보기.
@@ -42,6 +48,13 @@ const PreviewPanel = forwardRef(function PreviewPanel(
   const [showSafeArea, setShowSafeArea] = useState(false);
   const [mobileDocked, setMobileDocked] = useState(false);
   const [showcaseMode, setShowcaseMode] = useState(false);
+  // 비교 모드는 보기 상태다. 편집 상태·템플릿·공유 링크에 넣지 않는다.
+  const [compare, setCompare] = useState(createCompareState);
+  const comparable = canCompare(state.image);
+  // 사진을 지우면 열어 둔 비교 모드를 닫는다. 열린 채 갇히지 않게 한다.
+  useEffect(() => {
+    setCompare((current) => syncCompareToImage(current, state.image));
+  }, [state.image]);
   const readyChecks = buildReadyChecks({
     state,
     layout,
@@ -193,6 +206,15 @@ const PreviewPanel = forwardRef(function PreviewPanel(
           onClick={() => setShowcaseMode((visible) => !visible)}
         >
           {showcaseMode ? '편집으로 돌아가기' : '작품으로 보기 ↗'}
+        </button>
+        <button
+          type="button"
+          className="small compare-toggle"
+          aria-pressed={compare.open}
+          disabled={!comparable}
+          onClick={() => setCompare((current) => toggleCompare(current, state.image))}
+        >
+          {compare.open ? '비교 닫기' : '원본과 비교'}
         </button>
       </div>
 
