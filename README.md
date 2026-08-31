@@ -1,9 +1,7 @@
-> **T05 준비 저장소** — T03 `ALTER / EGO`를 기준 앱으로 삼아, 작은 기능 하나를
-> 두 AI가 제한된 요청 수 안에서 인계하며 완성하는 실험입니다.
-> 기능 구현 전 기준과 기록 양식은 [실험 계획](docs/EXPERIMENT_PLAN.md)에 고정했습니다.
-> 실제 작업 중단 시점에는 [인계 문서](docs/HANDOFF.md)만 다음 AI에게 제공합니다.
-> AI A 작업은 [공식 Claude 요청 1](CLAUDE_REQUEST_1.md)을 읽게 하여 시작합니다.
-> 전체 운영 규칙은 [Claude 시작 지시서](docs/START-CLAUDE.md)에 고정했습니다.
+> **T05 완료 저장소** — T03 `ALTER / EGO`에 `원본 ↔ 카드 비교 슬라이더`를 더하며,
+> Claude가 검사 1~3을 구현하고 Codex가 [인계 문서](docs/HANDOFF.md)만을 작업 기준으로
+> 검사 4~10과 전체 회귀 검증을 이어받았습니다. 기준은 [실험 계획](docs/EXPERIMENT_PLAN.md),
+> Codex의 수행 내역과 절차상 실수까지 포함한 결과는 [AI B 작업 기록](docs/AI-B-LOG.md)에 남겼습니다.
 
 <div align="center">
 
@@ -16,9 +14,9 @@ local-first 인터랙티브 카드 스튜디오
 
 <br>
 
-**[→ 지금 사용해보기](https://myeongjundev.github.io/t03-card-studio/)**
+**[→ 지금 사용해보기](https://myeongjundev.github.io/t05-ai-handoff/)**
 
-`React 19` · `Vite 8` · `런타임 의존성 2개` · `단위 70 · e2e 28`
+`React 19` · `Vite 8` · `런타임 의존성 2개` · `단위 85 · e2e 38`
 
 <br>
 
@@ -94,8 +92,8 @@ npm.cmd run dev
 ## 검사
 
 ```bash
-npm test                              # 단위 70개 (브라우저 불필요)
-npm run build && npm run test:e2e     # 실제 브라우저 28개
+npm test                              # 단위 85개 (브라우저 불필요)
+npm run build && npm run test:e2e     # 실제 브라우저 38개
 ```
 
 e2e 를 처음 돌릴 때는 `npx playwright install chromium` 이 한 번 필요합니다.
@@ -105,17 +103,19 @@ e2e 를 처음 돌릴 때는 `npx playwright install chromium` 이 한 번 필�
 **e2e 는 "실제로 어떤 픽셀이 나왔는가"** 를 봅니다. 역할이 다릅니다 — 예를 들어
 컴포넌트가 캔버스에 직접 덧그리는 결함은 렌더러가 멀쩡하므로 e2e 에서만 걸립니다.
 
-e2e 는 세 갈래입니다.
+e2e 는 네 갈래입니다.
 
 | 파일 | 무엇을 지키는가 |
 | --- | --- |
 | `pixels.e2e.js` | 미리보기와 PNG 가 같은 픽셀인지, 세 시대가 실제로 다른 픽셀인지, 같은 설정이 같은 결과를 내는지 |
 | `interaction.e2e.js` | 실제로 배포된 적이 있는 조작 결함 — 방향키로 시대를 탐색할 수 있는지, 페이지 안 이동이 공유 링크를 지우지 않는지 |
 | `contrast.e2e.js` | 화면의 모든 글자가 읽히는지. 알림·경고·선택 상태·어두운 전시 화면까지 상태를 만들어 가며 잽니다 |
+| `compare.e2e.js` | 비교 슬라이더의 접근성·경계 처리와 PNG·실행 취소·템플릿 회귀, T05 인계 결과 화면을 검증합니다 |
 
 ## 기능
 
 - **시대를 직접 가르는 첫 화면** — 포인터·터치·방향키로 2004·2012·2026을 탐색하고 Studio에 연결
+- **원본 ↔ 카드 비교** — 편집 결과 위 원본 경계를 끌거나 방향키·Home·End로 움직이며 차이를 확인
 - **작품으로 보기** — 편집 UI를 숨기고 결과를 독립된 전시 화면으로 확인
 - **모바일 빠른 시작** — 시대 선택 후 결과 미리보기로 바로 이동하고 편집 중 플로팅 미리보기 지원
 - 이미지 불러오기 (PNG · JPEG), `가득 채우기` / `전체 보이기`

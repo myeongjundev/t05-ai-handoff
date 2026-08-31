@@ -42,6 +42,22 @@ export function clampPosition(value) {
   return Math.min(100, Math.max(0, Math.round(numeric)));
 }
 
+/**
+ * 슬라이더 표준 키를 다음 경계선 위치로 바꾼다.
+ * 지원하지 않는 키는 null 이므로 화면이 다른 단축키를 가로채지 않는다.
+ */
+export function positionFromKey(position, key, step = 1) {
+  if (key === 'Home') return 0;
+  if (key === 'End') return 100;
+  if (key === 'ArrowRight' || key === 'ArrowUp') {
+    return clampPosition(position + step);
+  }
+  if (key === 'ArrowLeft' || key === 'ArrowDown') {
+    return clampPosition(position - step);
+  }
+  return null;
+}
+
 /** 화면에 적는 두 숫자. 합이 언제나 100 이라 서로를 검산한다. */
 export function comparePercents(state) {
   return { original: state.position, card: 100 - state.position };

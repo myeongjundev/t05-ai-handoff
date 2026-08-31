@@ -2229,6 +2229,11 @@ body:has(.panel-preview.is-showcase) .to-top { display: none; }
   line-height: 0;
 }
 
+.compare-layer:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 4px;
+}
+
 .compare-original {
   width: 100%;
   height: 100%;
@@ -2259,4 +2264,105 @@ body:has(.panel-preview.is-showcase) .to-top { display: none; }
 .compare-readout strong {
   color: inherit;
   font-variant-numeric: tabular-nums;
+}
+
+.compare-unavailable {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* T05 · 대화가 끊긴 뒤에도 이어진 작업을 결과 화면 안에서 바로 검증한다. */
+.handoff-experiment {
+  margin-top: clamp(64px, 9vw, 120px);
+  padding: clamp(32px, 5vw, 64px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(30, 64, 175, .11), transparent 34%),
+    rgba(255, 252, 249, .9);
+}
+
+.handoff-heading { max-width: 780px; }
+.handoff-heading > p:first-child,
+.handoff-kicker {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-family: var(--font-meta);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.handoff-heading h2 {
+  margin: 0;
+  font-family: var(--font-korean);
+  font-size: clamp(30px, 4vw, 54px);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.handoff-heading > p:last-child {
+  max-width: 720px;
+  margin: 20px 0 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.handoff-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 34px 0;
+  padding: 0;
+  list-style: none;
+}
+.handoff-flow li,
+.handoff-grid article,
+.handoff-lessons {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--field);
+}
+.handoff-flow span {
+  display: block;
+  color: var(--accent);
+  font-family: var(--font-meta);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+.handoff-flow strong { display: block; margin-top: 8px; }
+.handoff-flow p,
+.handoff-lessons li,
+.handoff-disclosure { color: var(--muted); line-height: 1.65; }
+
+.handoff-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: 14px;
+}
+.handoff-items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.handoff-items li { display: flex; align-items: center; gap: 8px; }
+.handoff-items span { color: var(--accent); font-family: var(--font-meta); font-size: 10px; }
+.handoff-table-wrap { overflow-x: auto; }
+.handoff-experiment table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.handoff-experiment th,
+.handoff-experiment td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+.handoff-experiment thead th { color: var(--accent); }
+.handoff-lessons { margin-top: 14px; }
+.handoff-lessons ul { margin: 0; padding-left: 1.2rem; }
+.handoff-disclosure { margin: 14px 2px 0; font-size: .82rem; }
+
+@media (max-width: 760px) {
+  .handoff-flow,
+  .handoff-grid { grid-template-columns: 1fr; }
 }

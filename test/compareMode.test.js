@@ -5,6 +5,7 @@ import {
   clampPosition,
   comparePercents,
   createCompareState,
+  positionFromKey,
   setComparePosition,
   syncCompareToImage,
   toggleCompare,
@@ -93,4 +94,19 @@ test('닫았다 열어도 보던 자리로 돌아온다', () => {
   assert.equal(state.open, false);
   state = toggleCompare(state, true);
   assert.deepEqual(state, { open: true, position: 80 });
+});
+
+test('방향키는 경계선을 한 칸씩 움직이고 범위를 벗어나지 않는다 — 검사 6', () => {
+  assert.equal(positionFromKey(50, 'ArrowRight'), 51);
+  assert.equal(positionFromKey(50, 'ArrowUp'), 51);
+  assert.equal(positionFromKey(50, 'ArrowLeft'), 49);
+  assert.equal(positionFromKey(50, 'ArrowDown'), 49);
+  assert.equal(positionFromKey(100, 'ArrowRight'), 100);
+  assert.equal(positionFromKey(0, 'ArrowLeft'), 0);
+});
+
+test('Home·End는 양 끝으로 가고 다른 키는 무시한다 — 검사 6', () => {
+  assert.equal(positionFromKey(37, 'Home'), 0);
+  assert.equal(positionFromKey(37, 'End'), 100);
+  assert.equal(positionFromKey(37, 'Enter'), null);
 });

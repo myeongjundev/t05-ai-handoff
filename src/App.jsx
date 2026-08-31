@@ -26,6 +26,7 @@ import { loadTemplates, saveTemplates } from './templates/storage.js';
 import { templateFromState, stateFromTemplate } from './templates/schema.js';
 import EditorPanel from './components/EditorPanel.jsx';
 import PreviewPanel from './components/PreviewPanel.jsx';
+import HandoffExperiment from './components/HandoffExperiment.jsx';
 import TemplatePanel from './components/TemplatePanel.jsx';
 import TemporalScanner from './components/TemporalScanner.jsx';
 import DropZone from './components/DropZone.jsx';
@@ -786,6 +787,8 @@ export default function App() {
           onImportJson={importJson}
         />
       </div>
+
+      <HandoffExperiment />
 
       {/*
         보일 때만 DOM 에 넣는다. 숨긴 채로 두면 Tab 이 화면에 없는 버튼에

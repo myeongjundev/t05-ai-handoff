@@ -6,6 +6,7 @@ import {
   canCompare,
   comparePercents,
   createCompareState,
+  positionFromKey,
   setComparePosition,
   syncCompareToImage,
   toggleCompare,
@@ -155,6 +156,16 @@ const PreviewPanel = forwardRef(function PreviewPanel(
     }
   };
 
+  const handleCompareKeyDown = (event) => {
+    const next = positionFromKey(compare.position, event.key);
+    if (next === null) return;
+    event.preventDefault();
+    setCompare((current) => {
+      const position = positionFromKey(current.position, event.key);
+      return position === null ? current : setComparePosition(current, position);
+    });
+  };
+
   const handlePointerDown = (event) => {
     const canvas = event.currentTarget;
     if (!isOverText(canvas, event)) return;
@@ -258,12 +269,18 @@ const PreviewPanel = forwardRef(function PreviewPanel(
           type="button"
           className="small compare-toggle"
           aria-pressed={compare.open}
+          aria-describedby={!comparable ? 'compare-unavailable' : undefined}
           disabled={!comparable}
           onClick={() => setCompare((current) => toggleCompare(current, state.image))}
         >
           {compare.open ? '비교 닫기' : '원본과 비교'}
         </button>
       </div>
+      {!comparable && (
+        <p className="compare-unavailable" id="compare-unavailable">
+          원본과 비교하려면 먼저 사진을 고르세요.
+        </p>
+      )}
 
       <div className="preview-head">
         <div className="ratio-block">
@@ -348,10 +365,18 @@ const PreviewPanel = forwardRef(function PreviewPanel(
           {compare.open && state.image && (
             <div
               className="compare-layer"
+              role="slider"
+              tabIndex={0}
+              aria-label="원본과 완성 카드 비교 경계선"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={compare.position}
+              aria-valuetext={`원본 ${comparePercent.original}%, 완성 카드 ${comparePercent.card}%`}
               onPointerDown={handleComparePointerDown}
               onPointerMove={handleComparePointerMove}
               onPointerUp={handleComparePointerEnd}
               onPointerCancel={handleComparePointerEnd}
+              onKeyDown={handleCompareKeyDown}
             >
               {/*
                 원본은 카드와 같은 fit 으로 얹는다. 다른 방식으로 맞추면 같은
@@ -387,7 +412,7 @@ const PreviewPanel = forwardRef(function PreviewPanel(
           원본 <strong>{comparePercent.original}%</strong>
           {' · '}
           완성 카드 <strong>{comparePercent.card}%</strong>
-          <span> — 경계선을 좌우로 끌어 보세요.</span>
+          <span> — 경계선을 끌거나 방향키·Home·End로 움직이세요.</span>
         </p>
       )}
 
