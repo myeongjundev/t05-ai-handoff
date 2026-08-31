@@ -5,9 +5,15 @@
  * 따로 다룬다. 템플릿 저장·공유 링크·되돌리기에 섞이면 안 되는 값이므로
  * 미리보기 안에서만 살고, 이 파일은 그 규칙을 지킬 수 있게 계산만 담는다.
  *
- * 지금은 열림/닫힘 하나뿐이다. 경계선 위치와 비율 계산은 검사 2·3 의 몫이라
- * 여기에 미리 만들어 두지 않는다.
+ * 담는 것은 열림/닫힘과 경계선 위치 둘이다.
+ *
+ * **경계선 값은 원본이 보이는 비율이다.** 0 이면 완성 카드만, 100 이면 원본만,
+ * 50 이면 반반이다. 화면의 어느 쪽이 원본인지는 이 숫자가 정하지 않는다 —
+ * 그리는 쪽이 정하고, 여기서는 0~100 하나만 지킨다.
  */
+
+/** 경계선이 열릴 때 서는 자리. 반반이 비교의 기본이다. */
+export const DEFAULT_POSITION = 50;
 
 /** 사진이 없으면 비교할 대상이 없다. 원본 자리에 넣을 것이 없기 때문이다. */
 export function canCompare(hasImage) {
@@ -15,7 +21,30 @@ export function canCompare(hasImage) {
 }
 
 export function createCompareState() {
-  return { open: false };
+  return { open: false, position: DEFAULT_POSITION };
+}
+
+/**
+ * 경계선을 옮긴다. 0~100 을 벗어나면 끝값에 세우고, 숫자가 아니면 무시한다.
+ *
+ * 미리보기 밖까지 끌어도 값이 튀지 않아야 하므로 자르는 일은 여기서 한 번만
+ * 한다. 그리는 쪽이 각자 자르면 한 곳을 고쳐도 다른 곳이 남는다.
+ */
+export function setComparePosition(state, value) {
+  const next = clampPosition(value);
+  if (next === null || next === state.position) return state;
+  return { ...state, position: next };
+}
+
+export function clampPosition(value) {
+  const numeric = typeof value === 'number' ? value : Number(value);
+  if (!Number.isFinite(numeric)) return null;
+  return Math.min(100, Math.max(0, Math.round(numeric)));
+}
+
+/** 화면에 적는 두 숫자. 합이 언제나 100 이라 서로를 검산한다. */
+export function comparePercents(state) {
+  return { original: state.position, card: 100 - state.position };
 }
 
 /**
@@ -25,8 +54,9 @@ export function createCompareState() {
  * 없어지므로, 사진을 요구하는 것은 여는 쪽뿐이다.
  */
 export function toggleCompare(state, hasImage) {
-  if (state.open) return { open: false };
-  return canCompare(hasImage) ? { open: true } : state;
+  // 위치는 그대로 둔다. 닫았다 열었을 때 보던 자리로 돌아온다.
+  if (state.open) return { ...state, open: false };
+  return canCompare(hasImage) ? { ...state, open: true } : state;
 }
 
 /**
@@ -35,6 +65,6 @@ export function toggleCompare(state, hasImage) {
  * 않기 위해서다.
  */
 export function syncCompareToImage(state, hasImage) {
-  if (state.open && !canCompare(hasImage)) return { open: false };
+  if (state.open && !canCompare(hasImage)) return { ...state, open: false };
   return state;
 }

@@ -4,7 +4,9 @@ import { buildReadyChecks } from '../state/readyCheck.js';
 import { getRecommendedRatio } from '../state/presets.js';
 import {
   canCompare,
+  comparePercents,
   createCompareState,
+  setComparePosition,
   syncCompareToImage,
   toggleCompare,
 } from '../state/compareMode.js';
@@ -106,6 +108,51 @@ const PreviewPanel = forwardRef(function PreviewPanel(
       py >= textArea.y - GRAB_PADDING &&
       py <= textArea.y + textArea.height + GRAB_PADDING
     );
+  };
+
+  const comparePercent = comparePercents(compare);
+  const compareDragRef = useRef(null);
+
+  /**
+   * 프레임 안의 가로 위치를 0~100 으로 바꾼다. 프레임 밖까지 끌어도 자르는 것은
+   * `setComparePosition` 한 곳이므로 여기서는 비율만 낸다.
+   */
+  const moveBoundary = (frame, clientX) => {
+    const rect = frame.getBoundingClientRect();
+    if (rect.width <= 0) return;
+    setCompare((current) =>
+      setComparePosition(current, ((clientX - rect.left) / rect.width) * 100)
+    );
+  };
+
+  const handleComparePointerDown = (event) => {
+    const frame = event.currentTarget;
+    compareDragRef.current = event.pointerId;
+    // 누른 자리로 먼저 옮긴다. 아래 포인터 잡기가 실패해도 이 한 번은 살아야 한다.
+    moveBoundary(frame, event.clientX);
+    event.preventDefault();
+    // 포인터 잡기는 없어도 되는 개선이다. 프레임 밖으로 나간 뒤의 이동까지
+    // 따라가려고 쓰는 것이고, 브라우저가 거절하면 프레임 안에서만 동작한다.
+    // 거절을 그대로 던지면 경계선이 눌린 자리에서 멈춘다.
+    try {
+      frame.setPointerCapture(event.pointerId);
+    } catch {
+      compareDragRef.current = null;
+    }
+  };
+
+  const handleComparePointerMove = (event) => {
+    if (compareDragRef.current !== event.pointerId) return;
+    moveBoundary(event.currentTarget, event.clientX);
+  };
+
+  const handleComparePointerEnd = (event) => {
+    if (compareDragRef.current !== event.pointerId) return;
+    compareDragRef.current = null;
+    const frame = event.currentTarget;
+    if (frame.hasPointerCapture?.(event.pointerId)) {
+      frame.releasePointerCapture(event.pointerId);
+    }
   };
 
   const handlePointerDown = (event) => {
@@ -298,6 +345,35 @@ const PreviewPanel = forwardRef(function PreviewPanel(
             onPointerCancel={handlePointerEnd}
             onPointerLeave={() => setGrabbable(false)}
           />
+          {compare.open && state.image && (
+            <div
+              className="compare-layer"
+              onPointerDown={handleComparePointerDown}
+              onPointerMove={handleComparePointerMove}
+              onPointerUp={handleComparePointerEnd}
+              onPointerCancel={handleComparePointerEnd}
+            >
+              {/*
+                원본은 카드와 같은 fit 으로 얹는다. 다른 방식으로 맞추면 같은
+                사진이 다르게 잘려서 비교가 거짓이 된다.
+              */}
+              <img
+                className="compare-original"
+                src={state.image.src}
+                alt=""
+                aria-hidden="true"
+                style={{
+                  objectFit: state.fit,
+                  clipPath: `inset(0 ${100 - compare.position}% 0 0)`,
+                }}
+              />
+              <div
+                className="compare-divider"
+                style={{ left: `${compare.position}%` }}
+                aria-hidden="true"
+              />
+            </div>
+          )}
           {state.ratio === '9:16' && showSafeArea && (
             <div className="safe-area-guide" aria-hidden="true">
               <span>화면 버튼과 겹칠 수 있는 영역</span>
@@ -305,6 +381,15 @@ const PreviewPanel = forwardRef(function PreviewPanel(
           )}
         </div>
       </div>
+
+      {compare.open && (
+        <p className="compare-readout" aria-live="polite">
+          원본 <strong>{comparePercent.original}%</strong>
+          {' · '}
+          완성 카드 <strong>{comparePercent.card}%</strong>
+          <span> — 경계선을 좌우로 끌어 보세요.</span>
+        </p>
+      )}
 
       <p className="preview-meta" id="preview-description">
         출력 크기 {size.width} × {size.height}px · 화면에 보이는 그림과 내려받는

@@ -2214,3 +2214,49 @@ body:has(.panel-preview.is-showcase) .to-top { display: none; }
 @media (max-width: 640px) {
   .hero-quick { max-width: none; padding: 12px; }
 }
+
+/*
+  원본 ↔ 카드 비교.
+
+  캔버스 위에 원본을 얹고 경계선까지만 보여 준다. 캔버스를 다시 그리지 않으므로
+  PNG 출력과 되돌리기는 이 기능을 몰라도 된다.
+*/
+.compare-layer {
+  position: absolute;
+  inset: 0;
+  cursor: ew-resize;
+  touch-action: none;
+  line-height: 0;
+}
+
+.compare-original {
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.compare-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.compare-readout {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.compare-readout strong {
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+}
