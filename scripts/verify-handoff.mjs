@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
+import { appendFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -90,6 +90,58 @@ function runNpm(args, label, expectedTests) {
   }
 }
 
+function currentCommit() {
+  if (process.env.GITHUB_SHA) return process.env.GITHUB_SHA;
+  const result = git(['rev-parse', 'HEAD']);
+  return result.status === 0 ? result.stdout.trim() : 'unknown';
+}
+
+function writeVerificationArtifacts() {
+  const report = {
+    schemaVersion: 1,
+    project: 'T05 AI handoff',
+    result: 'passed',
+    commit: currentCommit(),
+    generatedAt: new Date().toISOString(),
+    evidence: {
+      requiredFiles: requiredFiles.length,
+      protectedDocuments: Object.keys(protectedDocuments).length,
+      milestoneCommits: milestoneCommits.length,
+    },
+    verification: {
+      unit: { passed: 85, total: 85 },
+      build: 'passed',
+      chromiumE2e: { passed: 38, total: 38 },
+    },
+  };
+
+  const reportPath = resolve(root, 'dist', 'handoff-verification.json');
+  writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
+  console.log(`\n배포 검증 증거 생성: ${reportPath}`);
+
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    const shortSha = report.commit.slice(0, 7);
+    const summary = [
+      '## T05 인계 검증 · PASS',
+      '',
+      `커밋: \`${shortSha}\``,
+      '',
+      '| 증거 | 결과 |',
+      '|---|---:|',
+      `| 필수 인계 자료 | ${report.evidence.requiredFiles}/${report.evidence.requiredFiles} |`,
+      `| 보호 문서 본문 | ${report.evidence.protectedDocuments}/${report.evidence.protectedDocuments} |`,
+      `| 역할 분리 커밋 | ${report.evidence.milestoneCommits}/${report.evidence.milestoneCommits} |`,
+      `| 단위 테스트 | ${report.verification.unit.passed}/${report.verification.unit.total} |`,
+      `| 프로덕션 빌드 | ${report.verification.build.toUpperCase()} |`,
+      `| Chromium E2E | ${report.verification.chromiumE2e.passed}/${report.verification.chromiumE2e.total} |`,
+      '',
+      '배포 산출물에 `handoff-verification.json`을 함께 포함했습니다.',
+      '',
+    ].join('\n');
+    appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary, 'utf8');
+  }
+}
+
 console.log('T05 인계 증거를 검사합니다.');
 
 for (const file of requiredFiles) {
@@ -120,5 +172,6 @@ if (evidenceOnly) {
 runNpm(['test'], '단위 테스트 85/85', 85);
 runNpm(['run', 'build'], '프로덕션 빌드');
 runNpm(['run', 'test:e2e'], 'Chromium E2E 38/38', 38);
+writeVerificationArtifacts();
 
 console.log('\nT05 전체 검증 완료: 인계 증거 + 단위 85 + 빌드 + E2E 38이 모두 통과했습니다.');

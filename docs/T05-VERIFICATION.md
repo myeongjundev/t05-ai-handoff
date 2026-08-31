@@ -44,3 +44,14 @@ npm.cmd run verify:handoff
 첫 명령은 필수 인계 자료 10개, 보호 문서 5개와 역할이 분리된 핵심 커밋 5개를
 빠르게 확인한다. 두 번째 명령은 같은 증거 검사에 단위 85건, 빌드와 Chromium
 e2e 38건까지 이어서 실행하며 검사 개수가 달라도 실패한다.
+
+CI에서는 성공 결과를 Actions 요약 표로 남기고, 배포 산출물에도
+[`handoff-verification.json`](https://myeongjundev.github.io/t05-ai-handoff/handoff-verification.json)을
+포함한다. JSON의 커밋 값과 현재 배포 커밋을 대조하면 어떤 코드가 검증됐는지 확인할
+수 있다.
+
+## 제품 정리 판단 확인
+
+공개 화면의 `06 / POST-EXPERIMENT PRODUCT DECISION`에서 3열 구조와 선택한
+Canvas-first 2열 구조를 비교한다. 기능 삭제 없이 주요 구역 23→약 14, 반복 안내
+8→3, 미리보기 조작 줄 3→1로 줄였고, 같은 85/38 회귀 검사를 다시 통과했다.

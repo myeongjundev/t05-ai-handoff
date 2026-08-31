@@ -13,7 +13,8 @@ AI A와 AI B 사이의 대화 대신 코드·검사·`HANDOFF.md`만 전달했�
 
 **[서비스 바로가기](https://myeongjundev.github.io/t05-ai-handoff/)** ·
 **[30초 검증 안내](docs/T05-VERIFICATION.md)** ·
-**[최종 비교 결과](docs/FINAL_COMPARISON.md)**
+**[최종 비교 결과](docs/FINAL_COMPARISON.md)** ·
+**[배포 검증 JSON](https://myeongjundev.github.io/t05-ai-handoff/handoff-verification.json)**
 
 [![Deploy to GitHub Pages](https://github.com/myeongjundev/t05-ai-handoff/actions/workflows/deploy.yml/badge.svg)](https://github.com/myeongjundev/t05-ai-handoff/actions/workflows/deploy.yml)
 ![Unit tests](https://img.shields.io/badge/unit-85%2F85-0e7053)
@@ -112,6 +113,28 @@ Studio는 편집과 결과에 집중하는 2열 구조입니다. 템플릿은 �
 
 editorState · template · share link · history · PNG에는 들어가지 않음
 ```
+
+## 실험 뒤에도 이어진 제품 판단
+
+기능 완성 뒤에도 “정보가 많다”는 문제를 남겨 두지 않았습니다. Claude가 현재 구조와
+Canvas-first·Single-column 목업을 만들고, Codex가 결과 확인 거리가 짧은 Option A를
+구현해 회귀 검증했습니다.
+
+| 측정 항목 | 정리 전 | Canvas-first 이후 |
+|---|---:|---:|
+| 주요 시각 구역 | 23 | 약 14 |
+| 반복 안내 | 8 | 3 |
+| 미리보기 조작 줄 | 3 | 1 |
+| Studio 열 | 3 | 2 |
+
+- 템플릿을 삭제하지 않고 편집기 하단 접이식 묶음으로 이동했습니다.
+- 보기·공유·다운로드를 한 툴바로 모으고 저빈도 기능만 메뉴에 넣었습니다.
+- 캔버스 렌더와 PNG는 바꾸지 않고 CSS 표시 면적만 넓혔습니다.
+- 390px에서는 미리보기를 먼저 보여 주며 가로 overflow가 없음을 다시 검사했습니다.
+
+공개 화면의 `06 / POST-EXPERIMENT PRODUCT DECISION`에서 Before/After 구조와 선택
+이유를 직접 볼 수 있습니다. 구현 뒤에도 단위 85/85와 Chromium E2E 38/38을
+유지했습니다.
 
 ## 고정 검사 10개
 

@@ -71,3 +71,13 @@ E2E 38개를 실행하고 테스트 개수까지 정확히 일치해야 성공�
 CI는 전체 Git 기록을 받은 뒤 빠른 `verify:handoff:evidence`를 먼저 실행한다.
 따라서 문서가 사라지거나 보호 본문이 바뀌거나 인계 커밋이 없는 소스 묶음은
 테스트가 통과하더라도 배포 단계로 넘어가지 않는다.
+
+## 포트폴리오 공개 보강
+
+콘솔에만 있던 판단을 공개 화면으로 옮겼다. `06 / POST-EXPERIMENT PRODUCT
+DECISION` 섹션에서 3열 Before와 Canvas-first After를 같은 크기의 와이어프레임으로
+비교하고, 23→약 14·8→3·3→1·3열→2열 수치를 함께 보여 준다.
+
+`verify:handoff`는 성공 시 `dist/handoff-verification.json`을 만들고 CI에서는 같은
+내용을 Actions Step Summary 표로 쓴다. 따라서 README의 통과 숫자가 단순 주장으로
+남지 않고, 배포 커밋 SHA와 연결된 기계 판독 증거로 공개된다.
