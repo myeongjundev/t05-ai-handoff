@@ -2,6 +2,7 @@
 > 두 AI가 제한된 요청 수 안에서 인계하며 완성하는 실험입니다.
 > 기능 구현 전 기준과 기록 양식은 [실험 계획](docs/EXPERIMENT_PLAN.md)에 고정했습니다.
 > 실제 작업 중단 시점에는 [인계 문서](docs/HANDOFF.md)만 다음 AI에게 제공합니다.
+> AI A 작업은 [Claude 시작 지시서](docs/START-CLAUDE.md)를 첫 요청으로 보내 시작합니다.
 
 <div align="center">
 
