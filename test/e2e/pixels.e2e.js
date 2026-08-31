@@ -401,6 +401,19 @@ test('좁은 화면에서 가로 스크롤이 생기지 않는다', async () => 
     assert.deepEqual(result.overflowing, [], '화면 밖으로 나간 요소가 있다');
     assert.equal(result.scrolls, false, '가로 스크롤이 생겼다');
     assert.ok(result.previewTop < result.editorTop, '모바일에서 미리보기가 편집기보다 뒤에 있다');
+
+    // 좁은 화면에서는 목차가 작은 레일로 접히고, 필요할 때만 다섯 구획을 펼친다.
+    const sectionRail = narrow.getByRole('navigation', { name: '구획 바로가기' });
+    const railToggle = sectionRail.getByRole('button', { name: /구획 메뉴 열기/ });
+    assert.equal(await railToggle.isVisible(), true, '모바일 구획 레일이 보이지 않는다');
+    await railToggle.click();
+    assert.equal(
+      await sectionRail.getByRole('button', { name: '스튜디오' }).isVisible(),
+      true,
+      '접힌 구획 메뉴가 열리지 않는다'
+    );
+    await sectionRail.getByRole('button', { name: /구획 메뉴 접기/ }).click();
+
     // 첫 화면의 Scanner는 키보드로도 시간을 움직이고, 고른 시대를 작업실에 전달한다.
     const scanner = narrow.getByRole('slider', { name: '시대 탐색' });
     assert.equal(await scanner.count(), 1, 'Temporal Scanner가 없다');

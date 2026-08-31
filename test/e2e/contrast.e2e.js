@@ -202,9 +202,9 @@ test('경고 상태가 읽힌다', async () => {
 });
 
 test('아래로 내려간 뒤 나타나는 것들이 읽힌다', async () => {
-  // '맨 위로' 는 한 화면쯤 내려가야 나온다. 첫 화면만 훑으면 검사되지 않는다.
+  // 현재 구획의 강조가 바뀐 상태까지 훑어 고정 목차의 양쪽 상태를 검사한다.
   await page.evaluate(() => window.scrollTo(0, window.innerHeight * 2));
-  await page.waitForSelector('.to-top');
+  await page.waitForSelector('.section-rail-item[aria-current="true"]');
   await audit(page, '스크롤 후');
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(200);

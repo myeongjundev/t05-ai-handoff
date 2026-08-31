@@ -219,7 +219,12 @@ test('공개 화면에서 AI A → 인계 → AI B 결과가 함께 보인다', 
     assert.match(await section.innerText(), /10\/10 통과/);
 
     const cleanup = page.locator('.cleanup-case');
-    await cleanup.scrollIntoViewIfNeeded();
+    const sectionRail = page.getByRole('navigation', { name: '구획 바로가기' });
+    assert.equal(await sectionRail.isVisible(), true);
+    await sectionRail.getByRole('button', { name: '제품 판단' }).click();
+    await page.waitForTimeout(500);
+    const cleanupTop = await cleanup.evaluate((element) => element.getBoundingClientRect().top);
+    assert.ok(cleanupTop >= 0 && cleanupTop < 300, `제품 판단 구획으로 이동하지 못했다: ${cleanupTop}`);
     assert.equal(await cleanup.getByText('Canvas-first 2열').isVisible(), true);
     assert.match(await cleanup.innerText(), /23[\s\S]*약 14/);
     assert.match(await cleanup.innerText(), /85\/85[\s\S]*38\/38/);

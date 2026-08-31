@@ -26,7 +26,7 @@ function AfterWireframe() {
 
 export default function StudioCleanupCaseStudy() {
   return (
-    <section className="cleanup-case" aria-labelledby="cleanup-heading">
+    <section className="cleanup-case" id="product-decision" aria-labelledby="cleanup-heading">
       <header className="cleanup-heading" data-reveal>
         <p>06 / POST-EXPERIMENT PRODUCT DECISION</p>
         <h2 id="cleanup-heading">기능을 덜지 않고,<br />결정해야 할 것만 먼저 보이게.</h2>
