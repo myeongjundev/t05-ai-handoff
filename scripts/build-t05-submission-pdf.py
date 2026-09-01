@@ -199,6 +199,8 @@ mt.setStyle(TableStyle([
     ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
 ]))
 story += [mt, Spacer(1, 2 * mm), p("AI A 종료: 1~3 PASS · 4~10 미실행 · FAIL 회차 0. AI B는 4~10 구현 뒤 전체 1~10을 재실행해 10/10 PASS를 확인했습니다.", "KSmall")]
+story += [p("판정 구간의 비교표는 공개 결과물 화면 · README · FINAL_COMPARISON 모두 모델·서비스 이름을 가린 AI A / AI B 로만 표기합니다. 실제 이름은 docs/AI-A-LOG.md 와 docs/AI-B-LOG.md 에 그대로 공개합니다.", "KSmall")]
+story += [p("FINAL_COMPARISON 의 AI B 통과 검사는 한때 7로 적혀 같은 문서의 최종 검사표와 어긋나 있었습니다. 7은 배정 수였고, 배정 검사 7 과 최종 실행·통과 검사 10 으로 나눠 정정했습니다.", "KSmall")]
 
 story += [Spacer(1, 2 * mm), p("6. 고정 소스 버전과 인수인계", "KH1")]
 versions = [
@@ -221,12 +223,14 @@ story += [vt, Spacer(1, 2 * mm)]
 story += [p("순서: AI A 시작 → AI A 종료·인수인계 → AI B 시작 → AI B 완료", "KCardBold")]
 story += [p("공통 입력: 기능 문장 · 고정 검사 10개 · 45분/5회 상한 · 시작 소스. 역할별 지시: AI A는 1~3 뒤 인계, AI B는 4~10 완성과 전체 재검사.", "KSmall")]
 story += [p("인수인계 7항목: 목표 · 현재 상태 · 실행 명령 · 통과 검사 · 남은 문제 · 다음 행동 · 건드리지 말 것. HANDOFF 수정 0회, 별도 대화 전문 제공 0회. AI-A-LOG를 연 절차 오류 1건은 공개 기록했습니다.", "KSmall")]
+story += [p("HANDOFF 의 성공 기준인 단위 83건은 AI A 가 멈춘 시점의 값입니다. AI B 가 검사 6용 단위 2건을 추가해 현재는 85건이며, 검사 완화나 삭제로 늘어난 수가 아닙니다.", "KSmall")]
 
 story += [Spacer(1, 2 * mm), p("7. 새 작업 폴더 재현과 자동 검증", "KH1")]
 verification = [
     [p("인계 증거", "KCardBold"), p("필수 자료 10개 · 보호 문서 5개 · 핵심 커밋 5개 PASS (봉인 정정 2건은 각 문서의 정정 이력에 기록)", "KCard")],
     [p("제품 검증", "KCardBold"), p("단위 85/85 · Chromium 38/38 · 프로덕션 빌드 PASS", "KCard")],
     [p("새 폴더 재현", "KCardBold"), p("고정 소스 8409608… 과 제출 커밋 bb774e8… 을 각각 새 폴더에 재수신 → npm install → 단위 85/85 → 빌드 PASS", "KCard")],
+    [p("봉인 정정", "KCardBold"), p("2026-09-01 AI-B-LOG 시작 커밋 오기 1건과 FINAL_COMPARISON 통과 수 표기·이름 가림을 정정하며 봉인 값을 재고정. 두 문서 하단 정정 이력에 무엇을·왜·언제를 기록. 측정값 변경 0건", "KCard")],
     [p("공개 접근", "KCardBold"), p("결과물 URL · 고정 소스 URL 모두 HTTP 200", "KCard")],
     [p("안전 확인", "KCardBold"), p("개인정보 0건 · 비밀값 원문 0건", "KCard")],
 ]
