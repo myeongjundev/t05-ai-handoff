@@ -93,7 +93,7 @@ story += [p("고정 검사 10/10 · 단위 85/85 · Chromium 38/38 · 프로덕�
 story += [p("1. 제출 URL", "KH1")]
 url_table = Table([
     [p("결과물", "KCardBold"), p("https://myeongjundev.github.io/t05-ai-handoff/", "KUrl")],
-    [p("고정 소스", "KCardBold"), p("https://github.com/myeongjundev/t05-ai-handoff/commit/840960808c3cebdf0f210dc117019a85a490786b", "KUrl")],
+    [p("고정 소스", "KCardBold"), p("https://github.com/myeongjundev/t05-ai-handoff/commit/bb774e890ba65b73ee99dac44453e9883b3650a9", "KUrl")],
 ], colWidths=[30 * mm, doc.width - 30 * mm])
 url_table.setStyle(TableStyle([
     ("BACKGROUND", (0, 0), (0, -1), PALE),
@@ -224,9 +224,9 @@ story += [p("인수인계 7항목: 목표 · 현재 상태 · 실행 명령 · �
 
 story += [Spacer(1, 2 * mm), p("7. 새 작업 폴더 재현과 자동 검증", "KH1")]
 verification = [
-    [p("인계 증거", "KCardBold"), p("필수 자료 10개 · 보호 문서 5개 · 핵심 커밋 5개 PASS", "KCard")],
+    [p("인계 증거", "KCardBold"), p("필수 자료 10개 · 보호 문서 5개 · 핵심 커밋 5개 PASS (봉인 정정 2건은 각 문서의 정정 이력에 기록)", "KCard")],
     [p("제품 검증", "KCardBold"), p("단위 85/85 · Chromium 38/38 · 프로덕션 빌드 PASS", "KCard")],
-    [p("새 폴더 재현", "KCardBold"), p("고정 소스 8409608… 재수신 → npm install → 단위 85/85 → 빌드 PASS", "KCard")],
+    [p("새 폴더 재현", "KCardBold"), p("고정 소스 8409608… 과 제출 커밋 bb774e8… 을 각각 새 폴더에 재수신 → npm install → 단위 85/85 → 빌드 PASS", "KCard")],
     [p("공개 접근", "KCardBold"), p("결과물 URL · 고정 소스 URL 모두 HTTP 200", "KCard")],
     [p("안전 확인", "KCardBold"), p("개인정보 0건 · 비밀값 원문 0건", "KCard")],
 ]
