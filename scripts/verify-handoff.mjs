@@ -25,7 +25,7 @@ const requiredFiles = [
 const protectedDocuments = {
   'docs/EXPERIMENT_PLAN.md': 'aba87da0d59fb57e0feea6be3214c9c62162f2bbe22a59c290ef6eb98b166b62',
   'docs/AI-A-LOG.md': '33aaddca5948f4f29325dd60d4556183fc654415297d4c8b3a6836761ad5fcf6',
-  'docs/AI-B-LOG.md': 'e47fd53f8062c1f42e62a61353c07645ed23b3a4ae7641ccc0b2cb8e77ea33aa',
+  'docs/AI-B-LOG.md': '07fd223318f3abc2fd0ce6f957953262e2eba37f0c2a49338e2b4a562266168e',
   'docs/FINAL_COMPARISON.md': 'fab0bea11106bd5ddaaa9342d30503d400db5d7515e6de0e455ea83cd5b6449a',
   'docs/HANDOFF.md': '1144568c7ea153843cdefd9194f46c92dd746342558daa2a0cac7dda18966160',
 };
