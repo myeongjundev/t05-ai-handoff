@@ -33,8 +33,8 @@ export default function HandoffExperiment({ onGoToStudio }) {
         <p>05 / AI HANDOFF EXPERIMENT</p>
         <h2 id="handoff-heading">대화가 끊겨도,<br />프로젝트는 이어졌습니다.</h2>
         <p>
-          Claude가 검사 1~3에서 계획대로 멈추고 저장소와 일곱 항목의 인계 문서를
-          남겼습니다. Codex는 첫 대화 없이 그 문서를 작업 기준으로 삼아 검사 4~10을
+          AI A가 검사 1~3에서 계획대로 멈추고 저장소와 일곱 항목의 인계 문서를
+          남겼습니다. AI B는 첫 대화 없이 그 문서를 작업 기준으로 삼아 검사 4~10을
           완성했습니다. 여기서 비교하는 것은 모델의 속도가 아니라, 설명이 사라진 뒤에도
           문서가 다음 행동을 만들 수 있었는가입니다.
         </p>
@@ -64,7 +64,7 @@ export default function HandoffExperiment({ onGoToStudio }) {
 
       <ol className="handoff-flow" aria-label="AI 인계 과정">
         <li data-reveal style={{ '--reveal-order': 1 }}>
-          <span>AI A · CLAUDE</span>
+          <span>AI A</span>
           <strong>작은 수직 기능</strong>
           <p>열기·닫기, 경계선 이동, 0·50·100 상태를 구현한 뒤 계획 중단.</p>
           <small>11분 · 요청 3회 · 검사 1~3</small>
@@ -76,7 +76,7 @@ export default function HandoffExperiment({ onGoToStudio }) {
           <small>사람의 추가 설명 0회 · 문서 수정 0회</small>
         </li>
         <li data-reveal style={{ '--reveal-order': 3 }}>
-          <span>AI B · CODEX</span>
+          <span>AI B</span>
           <strong>완성과 회귀 검증</strong>
           <p>키보드·안내 상태를 보강하고 PNG·이력·템플릿까지 검사 10개를 완료.</p>
           <small>8분 · 요청 1회 · 검사 4~10</small>
@@ -137,8 +137,8 @@ export default function HandoffExperiment({ onGoToStudio }) {
         <article>
           <p className="handoff-kicker">다음 과제의 선택 기준</p>
           <ol>
-            <li><strong>작고 고립된 UI</strong><span>Claude로 수직 구현을 시작하고, 저장·공유·이력 경계를 넘으면 Codex 검증으로 전환합니다.</span></li>
-            <li><strong>회귀 범위가 넓은 기능</strong><span>Codex로 자동 검사를 먼저 고정하고, 화면 언어와 서사가 약하면 Claude 검토를 붙입니다.</span></li>
+            <li><strong>작고 고립된 UI</strong><span>AI A로 수직 구현을 시작하고, 저장·공유·이력 경계를 넘으면 AI B 검증으로 전환합니다.</span></li>
+            <li><strong>회귀 범위가 넓은 기능</strong><span>AI B로 자동 검사를 먼저 고정하고, 화면 언어와 서사가 약하면 AI A 검토를 붙입니다.</span></li>
             <li><strong>AI를 바꾸는 순간</strong><span>HANDOFF와 받는 AI의 시작 지시서를 함께 만들고, 사람이 같은 내용을 다시 설명하면 인계 실패로 기록합니다.</span></li>
           </ol>
         </article>
@@ -151,6 +151,12 @@ export default function HandoffExperiment({ onGoToStudio }) {
           </dl>
         </article>
       </div>
+
+      <p className="handoff-disclosure" data-reveal>
+        이 구간의 비교표와 작업 기록은 판정을 위해 모델·서비스 이름을 가린 <code>AI A</code> ·
+        <code>AI B</code> 로만 표기합니다. 각 이름은 저장소의 <code>docs/AI-A-LOG.md</code> 와
+        <code>docs/AI-B-LOG.md</code> 에 그대로 공개합니다.
+      </p>
 
       <p className="handoff-disclosure" data-reveal>
         과정 감사 중 AI B가 금지된 AI A 작업 로그를 실수로 열람한 사실도 숨기지 않고

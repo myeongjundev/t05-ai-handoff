@@ -22,11 +22,13 @@ const requiredFiles = [
 ];
 
 // 줄바꿈은 OS마다 달라질 수 있으므로 LF로 정규화한 본문을 고정한다.
+// 봉인 값을 갱신할 때는 해당 문서의 `정정 이력` 절에 무엇을 왜 고쳤는지 함께 남긴다.
+// 기록 없이 값만 바꾸면 이 검사는 통과해도 원본 보존을 증명하지 못한다.
 const protectedDocuments = {
   'docs/EXPERIMENT_PLAN.md': 'aba87da0d59fb57e0feea6be3214c9c62162f2bbe22a59c290ef6eb98b166b62',
   'docs/AI-A-LOG.md': '33aaddca5948f4f29325dd60d4556183fc654415297d4c8b3a6836761ad5fcf6',
-  'docs/AI-B-LOG.md': '07fd223318f3abc2fd0ce6f957953262e2eba37f0c2a49338e2b4a562266168e',
-  'docs/FINAL_COMPARISON.md': 'fab0bea11106bd5ddaaa9342d30503d400db5d7515e6de0e455ea83cd5b6449a',
+  'docs/AI-B-LOG.md': '133ef145d8ea141f2753a39094b6c24e63f0b60b080e9f2aa20cc8f06a543ac1',
+  'docs/FINAL_COMPARISON.md': '07f48cfcebbff2b87aff610d733cf94227157e1eb1749df128d21b2d4c795e75',
   'docs/HANDOFF.md': '1144568c7ea153843cdefd9194f46c92dd746342558daa2a0cac7dda18966160',
 };
 

@@ -213,9 +213,11 @@ test('공개 화면에서 AI A → 인계 → AI B 결과가 함께 보인다', 
     await page.getByRole('button', { name: 'T05 결과' }).click();
     await page.waitForTimeout(500);
     assert.equal(await section.isVisible(), true);
-    assert.equal(await section.getByText('AI A · CLAUDE').isVisible(), true);
+    // 판정 구간에서는 모델·서비스 실명을 가린 AI A / AI B 로만 표기한다(T05-C28).
+    assert.equal(await section.getByLabel('AI 인계 과정').getByText('AI A', { exact: true }).isVisible(), true);
     assert.equal(await section.getByText('HANDOFF.MD').isVisible(), true);
-    assert.equal(await section.getByText('AI B · CODEX').isVisible(), true);
+    assert.equal(await section.getByLabel('AI 인계 과정').getByText('AI B', { exact: true }).isVisible(), true);
+    assert.doesNotMatch(await section.innerText(), /CLAUDE|CODEX|Claude|Codex/);
     assert.match(await section.innerText(), /10\/10 통과/);
 
     const cleanup = page.locator('.cleanup-case');
